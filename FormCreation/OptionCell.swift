@@ -19,7 +19,6 @@ class OptionCell : UITableViewCell {
         tv.translatesAutoresizingMaskIntoConstraints = false
         tv.textColor = .black
         tv.placeholder = "Enter an option here"
-        //tv.heightAnchor.constraint(equalToConstant: 40).isActive = true
         tv.font = UIFont.systemFont(ofSize: 16)
         tv.giveBorder(color: .lightGray)
         tv.curveView()

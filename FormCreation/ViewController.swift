@@ -40,9 +40,6 @@ class ViewController: UIViewController {
         self.questionTV.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 5).isActive = true
         self.questionTV.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -5).isActive = true
         self.questionTV.heightAnchor.constraint(equalToConstant: QuestionCell.HEIGHT * CGFloat((self.questions!.count + 1))).isActive = true
-//        } else {
-//            self.questionTV.heightAnchor.constraint(equalToConstant: QuestionCell.HEIGHT * CGFloat(self.questions!.count)).isActive = true
-//        }
         self.view.addSubview(self.addQuestionButton)
         self.addQuestionButton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 5).isActive = true
         self.addQuestionButton.topAnchor.constraint(equalTo: self.questionTV.bottomAnchor, constant: 5).isActive = true

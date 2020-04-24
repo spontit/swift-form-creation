@@ -37,8 +37,6 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
     private let addOptionButton : UIButton = {
         let btn = UIButton()
         btn.translatesAutoresizingMaskIntoConstraints = false
-//        let underlineAttribute = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue]
-//        let underlineAttributedString = NSMutableAttributedString(string: "add option", attributes: underlineAttribute)
         btn.setTitle("add option", for: .normal)
         btn.setTitleColor(.blue, for: .normal)
         return btn
