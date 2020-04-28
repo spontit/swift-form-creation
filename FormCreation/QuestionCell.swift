@@ -8,21 +8,15 @@
 
 import Foundation
 import UIKit
-import Eureka
 
 class QuestionCell : UITableViewCell, UITextFieldDelegate {
     
     static let HEIGHT : CGFloat = 250
     
-    //MARK:- Internal Globals
-    private var options: [String]? = []
+    //MARK:- Globals
     var optionTV: OptionTableView = OptionTableView(frame: .zero)
-    private let requiredSwitch = UISwitch()
-    private let allowMultipleSelectionSwitch = UISwitch()
-    private var optionTVConstraint1 : NSLayoutConstraint!
-    private var optionTVConstraint2 : NSLayoutConstraint!
     
-    private var questionEntry : UITextField = {
+    var questionEntry : UITextField = {
         let tv = UITextField()
         tv.translatesAutoresizingMaskIntoConstraints = false
         tv.heightAnchor.constraint(equalToConstant: 40).isActive = true
@@ -33,6 +27,24 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
         tv.curveView()
         return tv
     }()
+    
+    var deleteButton : DeleteOptionButton = {
+        let btn = DeleteOptionButton()
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.setTitle("Delete", for: .normal)
+        btn.setTitleColor(.red, for: .normal)
+        return btn
+    }()
+    
+    //MARK:- Internal Globals
+    private var options: [String]? = []
+    
+    private let requiredSwitch = UISwitch()
+    private let allowMultipleSelectionSwitch = UISwitch()
+    private var optionTVConstraint1 : NSLayoutConstraint!
+    private var optionTVConstraint2 : NSLayoutConstraint!
+    
+    
     
     private let addOptionButton : UIButton = {
         let btn = UIButton()
@@ -75,13 +87,7 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
         return label
     }()
     
-    private let deleteButton : UIButton = {
-        let btn = UIButton()
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.setTitle("Delete", for: .normal)
-        btn.setTitleColor(.red, for: .normal)
-        return btn
-    }()
+    
     
     private let topStack : UIStackView = {
         let stack = UIStackView()
@@ -148,7 +154,7 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
         self.requiredLabel.bottomAnchor.constraint(equalTo: self.requiredSwitch.bottomAnchor, constant: -15).isActive = true
         self.middleStack.addArrangedSubview(self.optionTV)
         self.buttonStack.addArrangedSubview(self.addOptionButton)
-        self.buttonStack.addArrangedSubview(self.deleteOptionButton)
+        //self.buttonStack.addArrangedSubview(self.deleteOptionButton)
         self.bottomStack.addArrangedSubview(self.allowMultipleSelectionSwitch)
         self.bottomStack.addArrangedSubview(self.allowMultipleSelectionLabel)
         self.bottomStack.addArrangedSubview(self.deleteButton)
@@ -171,6 +177,11 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
         self.overallStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -5).isActive = true
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
     //MARK:- @objc exposed functions
     @objc private func addOption(_ sender: Any) {
         print("added")
@@ -179,9 +190,9 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
         self.optionTV.reloadData()
     }
     
-    @objc private func deleteOption(_ sender: Any) {
+    @objc private func deleteOption(_ sender: DeleteOptionButton) {
         if self.options!.count >= 1 {
-            self.options?.removeLast()
+            self.options?.remove(at: sender.rowNumber! - 1)
             self.optionTV.reloadData()
         }
     }
@@ -201,6 +212,8 @@ extension QuestionCell : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.OPTION_CELL, for: indexPath) as! OptionCell
         cell.selectionStyle = .none
+        cell.deleteButton.setRowNumber(number: indexPath.row)
+        cell.deleteButton.addTarget(self, action: #selector(self.deleteOption(_:)), for: .touchUpInside)
         return cell
     }
     

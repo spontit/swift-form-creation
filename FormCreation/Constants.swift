@@ -13,6 +13,8 @@ struct Constants {
     static let QUESTION_CELL = "QuestionCell"
     static let OPTION_CELL = "OptionCell"
     
+    static let START_CONTROLLER = "StartController"
+    
     static let CORNER_RADIUS : CGFloat = 5.0
 }
 
@@ -187,6 +189,58 @@ extension UIFont
         {
             return setItalicFnc()
         }
+    }
+}
+
+extension UIBarButtonItem {
+    static func getCancelButton(target: Any, selector: Selector) -> UIBarButtonItem {
+        let cancelBtn = UIBarButtonItem(title: "Cancel", style: .plain, target: target, action: selector)
+        cancelBtn.tintColor = UIColor.green
+        return cancelBtn
+    }
+    
+    static func getSaveButton(target: Any, selector: Selector) -> UIBarButtonItem {
+        let saveButton = UIBarButtonItem.init(title: "Save", style: .plain, target: target, action: selector)
+        saveButton.tintColor = .blue
+        return saveButton
+    }
+    
+    static func getDoneButton(target: Any, selector: Selector) -> UIBarButtonItem {
+        let saveButton = UIBarButtonItem.init(title: "Done", style: .plain, target: target, action: selector)
+        saveButton.tintColor = .blue
+        return saveButton
+    }
+}
+
+class DeleteOptionButton : UIButton {
+    // MARK:- Data
+    
+    //var username: String?
+    var rowNumber: Int?
+    
+    // MARK:- Initialization
+    
+    init() {
+        super.init(frame: .zero)
+    }
+    
+    init(row: Int) {
+        super.init(frame: .zero)
+        self.rowNumber = row
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setRowNumber(number: Int?) {
+        self.rowNumber = number
+    }
+    
+    // MARK:- Deinit
+    
+    deinit {
+        print("Deinitializating \("Constants.REPLY_BUTTON").")
     }
 }
 

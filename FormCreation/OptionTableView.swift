@@ -10,6 +10,9 @@ import Foundation
 import UIKit
 
 class OptionTableView: UITableView {
+    
+    var rowNumer: Int?
+    
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
         self.setUp()
@@ -37,5 +40,9 @@ class OptionTableView: UITableView {
         
         self.allowsSelection = false
         self.allowsMultipleSelection = false
+    }
+    
+    func setRowNumber(row: Int) {
+        self.rowNumer = row
     }
 }

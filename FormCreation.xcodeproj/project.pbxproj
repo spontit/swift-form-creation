@@ -3,11 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7B166A6AD0CE295ECF191375 /* Pods_FormCreation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C57018A150D3149437C86E4C /* Pods_FormCreation.framework */; };
 		A27D3E15245207E40035EF01 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27D3E14245207E40035EF01 /* AppDelegate.swift */; };
 		A27D3E17245207E40035EF01 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27D3E16245207E40035EF01 /* SceneDelegate.swift */; };
 		A27D3E19245207E40035EF01 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27D3E18245207E40035EF01 /* ViewController.swift */; };
@@ -18,11 +17,12 @@
 		A27D3E37245207E90035EF01 /* FormCreationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27D3E36245207E90035EF01 /* FormCreationUITests.swift */; };
 		A27D3E452452087C0035EF01 /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27D3E442452087C0035EF01 /* Form.swift */; };
 		A27D3E47245222D70035EF01 /* QuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27D3E46245222D70035EF01 /* QuestionCell.swift */; };
-		A27D3E49245223DB0035EF01 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = A27D3E48245223DB0035EF01 /* Podfile */; };
 		A27D3E4B2452397A0035EF01 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27D3E4A2452397A0035EF01 /* Constants.swift */; };
 		A27D3E4D24523FD20035EF01 /* OptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27D3E4C24523FD20035EF01 /* OptionCell.swift */; };
 		A27D3E4F24524E000035EF01 /* OptionTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27D3E4E24524E000035EF01 /* OptionTableView.swift */; };
 		A27D3E51245263AA0035EF01 /* QuestionTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27D3E50245263AA0035EF01 /* QuestionTableView.swift */; };
+		A27D3E61245780860035EF01 /* StartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27D3E60245780860035EF01 /* StartController.swift */; };
+		A27D3E632457B9990035EF01 /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,9 +42,21 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		A27D3E642457B9990035EF01 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A27D3E632457B9990035EF01 /* (null) in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		37EE7937F4BE06129B20BC4B /* Pods-FormCreation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FormCreation.release.xcconfig"; path = "Target Support Files/Pods-FormCreation/Pods-FormCreation.release.xcconfig"; sourceTree = "<group>"; };
-		6E4FF76C08F4253F6EAF38C9 /* Pods-FormCreation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FormCreation.debug.xcconfig"; path = "Target Support Files/Pods-FormCreation/Pods-FormCreation.debug.xcconfig"; sourceTree = "<group>"; };
 		A27D3E11245207E40035EF01 /* FormCreation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FormCreation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A27D3E14245207E40035EF01 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A27D3E16245207E40035EF01 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -66,7 +78,7 @@
 		A27D3E4C24523FD20035EF01 /* OptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionCell.swift; sourceTree = "<group>"; };
 		A27D3E4E24524E000035EF01 /* OptionTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionTableView.swift; sourceTree = "<group>"; };
 		A27D3E50245263AA0035EF01 /* QuestionTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionTableView.swift; sourceTree = "<group>"; };
-		C57018A150D3149437C86E4C /* Pods_FormCreation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FormCreation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A27D3E60245780860035EF01 /* StartController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +86,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7B166A6AD0CE295ECF191375 /* Pods_FormCreation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,20 +106,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		38BD9CCBE910FDD7990B0774 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				C57018A150D3149437C86E4C /* Pods_FormCreation.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		772BAF18826141C6223D878D /* Pods */ = {
 			isa = PBXGroup;
 			children = (
 				A27D3E48245223DB0035EF01 /* Podfile */,
-				6E4FF76C08F4253F6EAF38C9 /* Pods-FormCreation.debug.xcconfig */,
-				37EE7937F4BE06129B20BC4B /* Pods-FormCreation.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -121,7 +122,6 @@
 				A27D3E35245207E90035EF01 /* FormCreationUITests */,
 				A27D3E12245207E40035EF01 /* Products */,
 				772BAF18826141C6223D878D /* Pods */,
-				38BD9CCBE910FDD7990B0774 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -151,6 +151,7 @@
 				A27D3E4C24523FD20035EF01 /* OptionCell.swift */,
 				A27D3E4E24524E000035EF01 /* OptionTableView.swift */,
 				A27D3E50245263AA0035EF01 /* QuestionTableView.swift */,
+				A27D3E60245780860035EF01 /* StartController.swift */,
 			);
 			path = FormCreation;
 			sourceTree = "<group>";
@@ -180,11 +181,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A27D3E3B245207E90035EF01 /* Build configuration list for PBXNativeTarget "FormCreation" */;
 			buildPhases = (
-				4DC7164F19578295DA099A56 /* [CP] Check Pods Manifest.lock */,
 				A27D3E0D245207E40035EF01 /* Sources */,
 				A27D3E0E245207E40035EF01 /* Frameworks */,
 				A27D3E0F245207E40035EF01 /* Resources */,
-				1E884C755704FA2E13A78E2F /* [CP] Embed Pods Frameworks */,
+				A27D3E642457B9990035EF01 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -281,7 +281,6 @@
 			files = (
 				A27D3E21245207E90035EF01 /* LaunchScreen.storyboard in Resources */,
 				A27D3E1E245207E90035EF01 /* Assets.xcassets in Resources */,
-				A27D3E49245223DB0035EF01 /* Podfile in Resources */,
 				A27D3E1C245207E40035EF01 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -302,48 +301,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		1E884C755704FA2E13A78E2F /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FormCreation/Pods-FormCreation-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FormCreation/Pods-FormCreation-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FormCreation/Pods-FormCreation-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4DC7164F19578295DA099A56 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-FormCreation-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		A27D3E0D245207E40035EF01 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -355,6 +312,7 @@
 				A27D3E51245263AA0035EF01 /* QuestionTableView.swift in Sources */,
 				A27D3E15245207E40035EF01 /* AppDelegate.swift in Sources */,
 				A27D3E4F24524E000035EF01 /* OptionTableView.swift in Sources */,
+				A27D3E61245780860035EF01 /* StartController.swift in Sources */,
 				A27D3E17245207E40035EF01 /* SceneDelegate.swift in Sources */,
 				A27D3E47245222D70035EF01 /* QuestionCell.swift in Sources */,
 				A27D3E4B2452397A0035EF01 /* Constants.swift in Sources */,
@@ -528,12 +486,12 @@
 		};
 		A27D3E3C245207E90035EF01 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6E4FF76C08F4253F6EAF38C9 /* Pods-FormCreation.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SZ2QZBVTC9;
 				INFOPLIST_FILE = FormCreation/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -547,12 +505,12 @@
 		};
 		A27D3E3D245207E90035EF01 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 37EE7937F4BE06129B20BC4B /* Pods-FormCreation.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = SZ2QZBVTC9;
 				INFOPLIST_FILE = FormCreation/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

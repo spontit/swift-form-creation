@@ -9,11 +9,12 @@
 import Foundation
 import UIKit
 
-class OptionCell : UITableViewCell {
+class OptionCell : UITableViewCell, UITextFieldDelegate {
     
     static let WIDTH = 100
     
-    //MARK:- Internal Globals
+    //MARK:- Globals
+    
     var optionEntry : UITextField = {
         let tv = UITextField()
         tv.translatesAutoresizingMaskIntoConstraints = false
@@ -25,13 +26,22 @@ class OptionCell : UITableViewCell {
         return tv
     }()
     
-    var optionLabel : UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
-        label.textColor = .black
-        label.isHidden = true
-        return label
+    var deleteButton : DeleteOptionButton = {
+        let btn = DeleteOptionButton()
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.setTitle("delete", for: .normal)
+        btn.setTitleColor(.red, for: .normal)
+        return btn
+    }()
+    //MARK:- Internal Globals
+    
+    
+    private var cellStack : UIStackView = {
+        let stack = UIStackView()
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = .horizontal
+        stack.spacing = 5
+        return stack
     }()
     
     //MARK:- Overriden Functions
@@ -46,17 +56,19 @@ class OptionCell : UITableViewCell {
     
     //MARK:- Helper Functions
     private func setUp() {
-        self.contentView.addSubview(self.optionEntry)
-        self.contentView.addSubview(self.optionLabel)
-        self.optionEntry.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 5).isActive = true
-        self.optionEntry.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -5).isActive = true
-        self.optionEntry.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 5).isActive = true
-        self.optionEntry.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -5).isActive = true
-        self.optionLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 5).isActive = true
-        self.optionLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -5).isActive = true
-        self.optionLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 5).isActive = true
-        self.optionLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -5).isActive = true
-        self.optionLabel.isHidden = true
+        self.cellStack.addArrangedSubview(self.optionEntry)
+        self.optionEntry.delegate = self
+        self.cellStack.addArrangedSubview(self.deleteButton)
+        self.contentView.addSubview(self.cellStack)
+        self.cellStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 5).isActive = true
+        self.cellStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -5).isActive = true
+        self.cellStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 5).isActive = true
+        self.cellStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -5).isActive = true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     
