@@ -15,6 +15,8 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
     
     //MARK:- Globals
     var optionTV: OptionTableView = OptionTableView(frame: .zero)
+    var question: String?
+    var options: [String]? = [""]
     
     var questionEntry : UITextField = {
         let tv = UITextField()
@@ -37,7 +39,7 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
     }()
     
     //MARK:- Internal Globals
-    private var options: [String]? = []
+    
     
     private let requiredSwitch = UISwitch()
     private let allowMultipleSelectionSwitch = UISwitch()
@@ -182,6 +184,12 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
         return true
     }
     
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField.text != nil {
+            self.question = textField.text
+        }
+    }
+    
     //MARK:- @objc exposed functions
     @objc private func addOption(_ sender: Any) {
         print("added")
@@ -202,11 +210,7 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
 
 extension QuestionCell : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.options?.count == 0 {
-            return 1
-        } else {
-            return self.options!.count + 1
-        }
+        return self.options!.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

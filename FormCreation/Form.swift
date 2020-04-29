@@ -15,7 +15,8 @@ struct Question {
     var selectedChoices : [String]?
     
     init() {
-        
+        self.body = ""
+        self.choices = []
     }
     
     init(body: String?, choices: [String]?, allowMultipleSelection: Bool?) {
@@ -26,6 +27,14 @@ struct Question {
     
     mutating func didSelectChoice(choice: String) {
         self.selectedChoices?.append(choice)
+    }
+    
+    mutating func setBody(body: String?) {
+        self.body = body
+    }
+    
+    mutating func setChoices(choices: [String]?) {
+        self.choices = choices
     }
 }
 

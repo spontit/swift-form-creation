@@ -12,6 +12,7 @@ import UIKit
 class OptionCell : UITableViewCell, UITextFieldDelegate {
     
     static let WIDTH = 100
+    var option: String?
     
     //MARK:- Globals
     
@@ -71,5 +72,11 @@ class OptionCell : UITableViewCell, UITextFieldDelegate {
         return true
     }
     
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField.text != nil {
+            self.option = textField.text
+        }
+        
+    }
     
 }

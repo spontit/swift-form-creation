@@ -1,11 +1,11 @@
 
 target 'FormCreation' do
 
-    use_frameworks!
+    #use_frameworks!
     
     inhibit_all_warnings!
     
-    pod 'Eureka'
+    pod 'IQKeyboardManagerSwift',:modular_headers => true
     
 end
     

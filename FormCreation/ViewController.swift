@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     
     //MARK:- Internal Globals
     private var questionTV : QuestionTableView = QuestionTableView(frame: .zero)
-    private var questions : [Question]? = []
+    private var questions : [Question]? = [Question()]
     private var keyboardHeight : CGFloat?
     private var keyboardWidth : CGFloat?
     
@@ -39,7 +39,7 @@ class ViewController: UIViewController {
     private func setUp() {
         self.view.backgroundColor = .white
         self.navigationItem.leftBarButtonItems = [UIBarButtonItem.getCancelButton(target: self, selector: #selector(self.cancel))]
-        self.navigationItem.rightBarButtonItems = [UIBarButtonItem.getDoneButton(target: self, selector: #selector(self.cancel))]
+        self.navigationItem.rightBarButtonItems = [UIBarButtonItem.getDoneButton(target: self, selector: #selector(self.save))]
         self.questionTV.dataSource = self
         self.questionTV.delegate = self
         self.addQuestionButton.addTarget(self, action: #selector(self.addQuestion(_:)), for: .touchUpInside)
@@ -70,9 +70,49 @@ class ViewController: UIViewController {
     }
     
     @objc private func cancel() {
+        self.questions = [Question()]
         self.dismiss(animated: true) {
             
         }
+    }
+    
+    @objc private func save() {
+        for row in 0..<self.questions!.count {
+            print("row", row)
+            let indexPath = IndexPath(row: row, section: 0)
+            let cell = self.questionTV.cellForRow(at: indexPath) as! QuestionCell
+            self.questions![row].setBody(body: cell.questionEntry.text ?? "")
+            var options : [String] = []
+            for i in 0..<cell.options!.count {
+                let optionCell = cell.optionTV.cellForRow(at: IndexPath(row: i, section: 0)) as! OptionCell
+                print("option: ", optionCell.optionEntry.text!)
+                options.append(optionCell.optionEntry.text!)
+            }
+            self.questions![row].setChoices(choices: options)
+        }
+        
+        for question in self.questions! {
+            print("question: ", question.body, question.choices)
+            if question.body!.count < 2 {
+                let alert = UIAlertController.init(title: "Alert", message: "Question should at least 2 characters long", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+                self.present(alert, animated: true)
+                
+                return
+            }
+            if Set(arrayLiteral: question.choices).count < question.choices!.count {
+                let alert = UIAlertController.init(title: "Alert", message: "Answer cannot be duplicate", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+                self.present(alert, animated: true)
+                return
+            }
+        }
+        
+        print("questions", self.questions)
+        self.dismiss(animated: true) {
+            
+        }
+        
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -81,7 +121,6 @@ class ViewController: UIViewController {
         let keyboardFrame = keyboardSize.cgRectValue
         self.keyboardHeight = keyboardFrame.height
         self.keyboardWidth = keyboardFrame.width
-//        self.replyTVBottomConstraint2 = self.replyTV.bottomAnchor.constraint(equalTo: self.textFieldEmbeddedView.topAnchor, constant: -5)
         if self.questions!.count > 1 {
             self.questionTV.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.keyboardHeight ?? 0, right: 0)
         }
@@ -92,16 +131,14 @@ class ViewController: UIViewController {
     @objc func keyboardWillHide(notification: NSNotification) {
         self.questionTV.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
+    
+    
 
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.questions!.isEmpty {
-            return 1
-        } else {
-            return self.questions!.count + 1
-        }
+        return self.questions!.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -114,6 +151,17 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return QuestionCell.HEIGHT
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! QuestionCell
+        self.questions![indexPath.row].setBody(body: cell.question)
+        var options : [String] = []
+        for i in 0..<cell.options!.count {
+            let optionCell = cell.optionTV.cellForRow(at: IndexPath(row: i, section: 0)) as! OptionCell
+            options.append(optionCell.optionEntry.text ?? "Empty Option")
+        }
+        self.questions![indexPath.row].setChoices(choices: options)
     }
 }
 
