@@ -13,6 +13,7 @@ struct Question {
     var choices : [String]?
     var allowMultipleSelection : Bool?
     var selectedChoices : [String]?
+    var required : Bool?
     
     init() {
         self.body = ""

@@ -132,6 +132,15 @@ class ViewController: UIViewController {
         self.questionTV.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     
+    @objc private func toggleAllowMultipleSelection(_ sender: DeleteOptionButton) {
+        sender.isSelected.toggle()
+        if sender.isSelected {
+            self.questions![sender.rowNumber!].allowMultipleSelection = true
+        } else {
+            self.questions![sender.rowNumber!].allowMultipleSelection = false
+        }
+    }
+    
     
 
 }
@@ -145,6 +154,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.QUESTION_CELL, for: indexPath) as! QuestionCell
         cell.deleteButton.setRowNumber(number: indexPath.row)
         cell.deleteButton.addTarget(self, action: #selector(self.deleteQuestion(_:)), for: .touchUpInside)
+        cell.allowMultipleSelectionButton.setRowNumber(number: indexPath.row)
+        cell.allowMultipleSelectionButton.addTarget(self, action: #selector(self.toggleAllowMultipleSelection(_:)), for: .touchUpInside)
         cell.optionTV.setRowNumber(row: indexPath.row)
         return cell
     }

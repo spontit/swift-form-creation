@@ -15,6 +15,12 @@ class OptionCell : UITableViewCell, UITextFieldDelegate {
     var option: String?
     
     //MARK:- Globals
+    var optionImage : UIImageView = {
+        let img = UIImageView()
+        img.translatesAutoresizingMaskIntoConstraints = false
+        img.image = UIImage(imageLiteralResourceName: "Unselected")
+        return img
+    }()
     
     var optionEntry : UITextField = {
         let tv = UITextField()
@@ -23,6 +29,7 @@ class OptionCell : UITableViewCell, UITextFieldDelegate {
         tv.placeholder = "Enter an option here"
         tv.font = UIFont.systemFont(ofSize: 16)
         tv.giveBorder(color: .lightGray)
+        tv.widthAnchor.constraint(equalToConstant: 300).isActive = true
         tv.curveView()
         return tv
     }()
@@ -30,8 +37,8 @@ class OptionCell : UITableViewCell, UITextFieldDelegate {
     var deleteButton : DeleteOptionButton = {
         let btn = DeleteOptionButton()
         btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.setTitle("delete", for: .normal)
-        btn.setTitleColor(.red, for: .normal)
+        btn.setImage(UIImage(imageLiteralResourceName: "DeleteOption"), for: .normal)
+        btn.widthAnchor.constraint(equalToConstant: 40).isActive = true
         return btn
     }()
     //MARK:- Internal Globals
@@ -43,6 +50,12 @@ class OptionCell : UITableViewCell, UITextFieldDelegate {
         stack.axis = .horizontal
         stack.spacing = 5
         return stack
+    }()
+    
+    private let spacingView : UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     //MARK:- Overriden Functions
@@ -57,6 +70,8 @@ class OptionCell : UITableViewCell, UITextFieldDelegate {
     
     //MARK:- Helper Functions
     private func setUp() {
+        self.cellStack.addArrangedSubview(self.optionImage)
+        self.cellStack.addArrangedSubview(self.spacingView)
         self.cellStack.addArrangedSubview(self.optionEntry)
         self.optionEntry.delegate = self
         self.cellStack.addArrangedSubview(self.deleteButton)

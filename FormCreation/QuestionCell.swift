@@ -33,8 +33,18 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
     var deleteButton : DeleteOptionButton = {
         let btn = DeleteOptionButton()
         btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.setTitle("Delete", for: .normal)
-        btn.setTitleColor(.red, for: .normal)
+        btn.setImage(UIImage(imageLiteralResourceName: "DeleteQuestion"), for: .normal)
+        btn.giveBorder(color: .black)
+        btn.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        btn.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        return btn
+    }()
+    
+    var allowMultipleSelectionButton : DeleteOptionButton = {
+        let btn = DeleteOptionButton()
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.setImage(UIImage(imageLiteralResourceName: "Unselected"), for: .normal)
+        btn.setImage(UIImage(imageLiteralResourceName: "Selected"), for: .selected)
         return btn
     }()
     
@@ -42,11 +52,18 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
     
     
     private let requiredSwitch = UISwitch()
-    private let allowMultipleSelectionSwitch = UISwitch()
+    //private let allowMultipleSelectionSwitch = UISwitch()
     private var optionTVConstraint1 : NSLayoutConstraint!
     private var optionTVConstraint2 : NSLayoutConstraint!
     
-    
+    private let allowMultipleSelectionLabel : UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Allow Multiple Selection"
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textColor = .black
+        return label
+    }()
     
     private let addOptionButton : UIButton = {
         let btn = UIButton()
@@ -56,18 +73,9 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
         return btn
     }()
     
-    private let deleteOptionButton : UIButton = {
-        let btn = UIButton()
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.setTitle("delete last option", for: .normal)
-        btn.setTitleColor(.red, for: .normal)
-        return btn
-    }()
-    
     private let spacingView : UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.giveBorder(color: .black)
         return view
     }()
     
@@ -75,15 +83,6 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Required"
-        label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = .black
-        return label
-    }()
-    
-    private let allowMultipleSelectionLabel : UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Allow Multiple Selection"
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = .black
         return label
@@ -144,11 +143,13 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
     
     //MARK:- Helper Functions
     private func setUp() {
+        let margins = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
+        self.contentView.frame = self.contentView.frame.inset(by: margins)
         self.questionEntry.delegate = self
         self.optionTV.delegate = self
         self.optionTV.dataSource = self
         self.addOptionButton.addTarget(self, action: #selector(self.addOption), for: .touchUpInside)
-        self.deleteOptionButton.addTarget(self, action: #selector(self.deleteOption(_:)), for: .touchUpInside)
+        //self.deleteOptionButton.addTarget(self, action: #selector(self.deleteOption(_:)), for: .touchUpInside)
         
         self.topStack.addArrangedSubview(self.questionEntry)
         self.topStack.addArrangedSubview(self.requiredSwitch)
@@ -157,7 +158,8 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
         self.middleStack.addArrangedSubview(self.optionTV)
         self.buttonStack.addArrangedSubview(self.addOptionButton)
         //self.buttonStack.addArrangedSubview(self.deleteOptionButton)
-        self.bottomStack.addArrangedSubview(self.allowMultipleSelectionSwitch)
+        self.bottomStack.addArrangedSubview(self.spacingView)
+        self.bottomStack.addArrangedSubview(self.allowMultipleSelectionButton)
         self.bottomStack.addArrangedSubview(self.allowMultipleSelectionLabel)
         self.bottomStack.addArrangedSubview(self.deleteButton)
         self.overallStack.addArrangedSubview(self.topStack)
