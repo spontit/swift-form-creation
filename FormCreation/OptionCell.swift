@@ -11,7 +11,7 @@ import UIKit
 
 class OptionCell : UITableViewCell, UITextFieldDelegate {
     
-    static let WIDTH = 100
+    static let HEIGHT : CGFloat = 40
     var option: String?
     
     //MARK:- Globals
@@ -19,6 +19,7 @@ class OptionCell : UITableViewCell, UITextFieldDelegate {
         let img = UIImageView()
         img.translatesAutoresizingMaskIntoConstraints = false
         img.image = UIImage(imageLiteralResourceName: "Unselected")
+        img.widthAnchor.constraint(equalToConstant: 30).isActive = true
         return img
     }()
     
@@ -38,7 +39,7 @@ class OptionCell : UITableViewCell, UITextFieldDelegate {
         let btn = DeleteOptionButton()
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.setImage(UIImage(imageLiteralResourceName: "DeleteOption"), for: .normal)
-        btn.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        btn.widthAnchor.constraint(equalToConstant: 30).isActive = true
         return btn
     }()
     //MARK:- Internal Globals
@@ -70,6 +71,7 @@ class OptionCell : UITableViewCell, UITextFieldDelegate {
     
     //MARK:- Helper Functions
     private func setUp() {
+        self.optionImage.widthConstaint = self.optionImage.heightConstaint
         self.cellStack.addArrangedSubview(self.optionImage)
         self.cellStack.addArrangedSubview(self.spacingView)
         self.cellStack.addArrangedSubview(self.optionEntry)

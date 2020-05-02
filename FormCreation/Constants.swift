@@ -12,6 +12,8 @@ import UIKit
 struct Constants {
     static let QUESTION_CELL = "QuestionCell"
     static let OPTION_CELL = "OptionCell"
+    static let FORM_OPTION_CELL = "FormOptionCell"
+    static let FORM_QUESTION_CELL = "FormQuestionCell"
     
     static let START_CONTROLLER = "StartController"
     
@@ -241,6 +243,38 @@ class DeleteOptionButton : UIButton {
     
     deinit {
         print("Deinitializating \("Constants.REPLY_BUTTON").")
+    }
+}
+
+class RequiredSwitch : UISwitch {
+    // MARK:- Data
+    
+    //var username: String?
+    var rowNumber: Int?
+    
+    // MARK:- Initialization
+    
+    init() {
+        super.init(frame: .zero)
+    }
+    
+    init(row: Int) {
+        super.init(frame: .zero)
+        self.rowNumber = row
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setRowNumber(number: Int?) {
+        self.rowNumber = number
+    }
+    
+    // MARK:- Deinit
+    
+    deinit {
+        print("Deinitializating \("Constants.REQUIRED_SWITCH").")
     }
 }
 

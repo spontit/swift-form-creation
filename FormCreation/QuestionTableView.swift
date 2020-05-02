@@ -26,7 +26,7 @@ class QuestionTableView : UITableView {
     
     private func setUp() {
         self.register(QuestionCell.self, forCellReuseIdentifier: Constants.QUESTION_CELL)
-        self.insetsContentViewsToSafeArea = true
+        self.insetsContentViewsToSafeArea = false
         self.contentInsetAdjustmentBehavior = .scrollableAxes
         
         self.translatesAutoresizingMaskIntoConstraints = false

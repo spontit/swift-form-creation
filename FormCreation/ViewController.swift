@@ -156,7 +156,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         cell.deleteButton.addTarget(self, action: #selector(self.deleteQuestion(_:)), for: .touchUpInside)
         cell.allowMultipleSelectionButton.setRowNumber(number: indexPath.row)
         cell.allowMultipleSelectionButton.addTarget(self, action: #selector(self.toggleAllowMultipleSelection(_:)), for: .touchUpInside)
-        cell.optionTV.setRowNumber(row: indexPath.row)
         return cell
     }
     

@@ -20,10 +20,11 @@ struct Question {
         self.choices = []
     }
     
-    init(body: String?, choices: [String]?, allowMultipleSelection: Bool?) {
+    init(body: String?, choices: [String]?, allowMultipleSelection: Bool?, required: Bool?) {
         self.body = body
         self.choices = choices
         self.allowMultipleSelection = allowMultipleSelection
+        self.required = required
     }
     
     mutating func didSelectChoice(choice: String) {
@@ -36,6 +37,10 @@ struct Question {
     
     mutating func setChoices(choices: [String]?) {
         self.choices = choices
+    }
+    
+    mutating func setRequired(required: Bool?) {
+        self.required = required
     }
 }
 

@@ -11,7 +11,7 @@ import UIKit
 
 class QuestionCell : UITableViewCell, UITextFieldDelegate {
     
-    static let HEIGHT : CGFloat = 250
+    static let HEIGHT : CGFloat = 300
     
     //MARK:- Globals
     var optionTV: OptionTableView = OptionTableView(frame: .zero)
@@ -51,7 +51,7 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
     //MARK:- Internal Globals
     
     
-    private let requiredSwitch = UISwitch()
+    private let requiredSwitch = RequiredSwitch()
     //private let allowMultipleSelectionSwitch = UISwitch()
     private var optionTVConstraint1 : NSLayoutConstraint!
     private var optionTVConstraint2 : NSLayoutConstraint!
@@ -68,7 +68,7 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
     private let addOptionButton : UIButton = {
         let btn = UIButton()
         btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.setTitle("add option", for: .normal)
+        btn.setTitle("Add Option", for: .normal)
         btn.setTitleColor(.blue, for: .normal)
         return btn
     }()
@@ -110,7 +110,7 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .horizontal
-        stack.spacing = 5
+        stack.spacing = 10
         return stack
     }()
     
@@ -137,19 +137,22 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
         self.setUp()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.contentView.frame = self.contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 5, right: 0))
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     //MARK:- Helper Functions
     private func setUp() {
-        let margins = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
-        self.contentView.frame = self.contentView.frame.inset(by: margins)
+        self.contentView.giveBorder(color: .lightGray)
         self.questionEntry.delegate = self
         self.optionTV.delegate = self
         self.optionTV.dataSource = self
         self.addOptionButton.addTarget(self, action: #selector(self.addOption), for: .touchUpInside)
-        //self.deleteOptionButton.addTarget(self, action: #selector(self.deleteOption(_:)), for: .touchUpInside)
         
         self.topStack.addArrangedSubview(self.questionEntry)
         self.topStack.addArrangedSubview(self.requiredSwitch)
@@ -157,20 +160,18 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
         self.requiredLabel.bottomAnchor.constraint(equalTo: self.requiredSwitch.bottomAnchor, constant: -15).isActive = true
         self.middleStack.addArrangedSubview(self.optionTV)
         self.buttonStack.addArrangedSubview(self.addOptionButton)
-        //self.buttonStack.addArrangedSubview(self.deleteOptionButton)
         self.bottomStack.addArrangedSubview(self.spacingView)
         self.bottomStack.addArrangedSubview(self.allowMultipleSelectionButton)
         self.bottomStack.addArrangedSubview(self.allowMultipleSelectionLabel)
         self.bottomStack.addArrangedSubview(self.deleteButton)
         self.overallStack.addArrangedSubview(self.topStack)
         self.overallStack.addArrangedSubview(self.middleStack)
-        //self.overallStack.addArrangedSubview(self.spacingView)
         self.overallStack.addArrangedSubview(self.buttonStack)
         self.overallStack.addArrangedSubview(self.bottomStack)
         self.contentView.addSubview(self.overallStack)
         
         
-        self.optionTVConstraint1 = self.optionTV.heightAnchor.constraint(equalToConstant: 120)
+        self.optionTVConstraint1 = self.optionTV.heightAnchor.constraint(equalToConstant: 160)
         self.optionTVConstraint1.isActive = true
         self.optionTVConstraint2 = self.optionTV.heightAnchor.constraint(equalToConstant: 40 * CGFloat(self.options!.count + 1))
         self.optionTVConstraint2.isActive = false
@@ -224,6 +225,6 @@ extension QuestionCell : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        return OptionCell.HEIGHT
     }
 }

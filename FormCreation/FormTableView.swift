@@ -1,18 +1,15 @@
 //
-//  OptionTableView.swift
+//  FormTableView.swift
 //  FormCreation
 //
-//  Created by Zhang Qiuhao on 4/23/20.
+//  Created by Zhang Qiuhao on 5/1/20.
 //  Copyright © 2020 Zhang Qiuhao. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-class OptionTableView: UITableView {
-    
-    var rowNumer: Int?
-    
+class FormTableView : UITableView {
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
         self.setUp()
@@ -28,7 +25,7 @@ class OptionTableView: UITableView {
     }
     
     private func setUp() {
-        self.register(OptionCell.self, forCellReuseIdentifier: Constants.OPTION_CELL)
+        self.register(FormQuestionCell.self, forCellReuseIdentifier: Constants.FORM_QUESTION_CELL)
         self.insetsContentViewsToSafeArea = true
         self.contentInsetAdjustmentBehavior = .scrollableAxes
         
@@ -41,8 +38,4 @@ class OptionTableView: UITableView {
         self.allowsSelection = false
         self.allowsMultipleSelection = false
     }
-    
-//    func setRowNumber(row: Int) {
-//        self.rowNumer = row
-//    }
 }
