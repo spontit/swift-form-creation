@@ -14,14 +14,17 @@ class FormQuestionCell : UITableViewCell {
     //MARK:- Globals
     var question = Question()
     var choices : [String]?
+    var maxOptionLine : Int = 0
     
     var questionText : UITextView = {
         let tv = UITextView()
-        tv.translatesAutoresizingMaskIntoConstraints = false
+        tv.translatesAutoresizingMaskIntoConstraints = true
         tv.textColor = .black
         tv.font = UIFont.systemFont(ofSize: 16)
         tv.isEditable = false
-        tv.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        tv.isScrollEnabled = false
+//        tv.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        tv.sizeToFit()
         return tv
     }()
     
@@ -72,7 +75,11 @@ class FormQuestionCell : UITableViewCell {
         self.contentView.giveBorder(color: .lightGray)
         self.optionTV.dataSource = self
         self.optionTV.delegate = self
+        self.optionTV.isScrollEnabled = false
+        self.optionTV.sizeToFit()
+        self.optionTV.translatesAutoresizingMaskIntoConstraints = true
         self.questionText.text = self.question.body
+        //self.questionText.heightConstaint?.constant = 40
         self.overallStack.addArrangedSubview(self.questionText)
         self.overallStack.addArrangedSubview(self.requiredLabel)
         self.overallStack.addArrangedSubview(self.spacingView)
@@ -88,7 +95,6 @@ class FormQuestionCell : UITableViewCell {
     
     @objc private func selectOption(_ sender: DeleteOptionButton) {
         sender.isSelected.toggle()
-        print("row numer", sender.rowNumber)
         if sender.isSelected == true {
             if self.question.allowMultipleSelection == false {
                 for i in 0 ..< self.question.choices!.count {
@@ -116,6 +122,11 @@ extension FormQuestionCell : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.FORM_OPTION_CELL, for: indexPath) as! FormOptionCell
         cell.optionText.text = self.question.choices?[indexPath.row]
+        let line = cell.optionText.calculateMaxLines()
+        if line > self.maxOptionLine {
+            self.maxOptionLine = line
+        }
+        print("max", self.maxOptionLine)
         cell.selectionStyle = .none
         if self.question.allowMultipleSelection == true {
             cell.optionButton.setImage(UIImage(imageLiteralResourceName: "CheckBoxUnselected"), for: .normal)

@@ -27,7 +27,7 @@ class FormController : UIViewController {
     private func setUp() {
         self.navigationItem.leftBarButtonItems = [UIBarButtonItem.getCancelButton(target: self, selector: #selector(self.cancel))]
         self.view.backgroundColor = .white
-        self.questions.append(Question(body: "When do you buy coffee?", choices: ["8am", "9am", "10am"], allowMultipleSelection: true, required: true))
+        self.questions.append(Question(body: "When do you buy coffee ajsfdkj asjfkjsak fsajfks fjsa fksfjsda fsjk?", choices: ["8am jfaskjfkwjkfjksfjkjfiwjfkjskjfwifji jsifjskfjwkjfk", "9am", "10am"], allowMultipleSelection: true, required: true))
         self.questions.append(Question(body: "What coffee do you like?", choices: ["Latte", "Mocha", "Black", "I'm not sure"], allowMultipleSelection: false, required: false))
         self.formTV.dataSource = self
         self.formTV.delegate = self
@@ -57,11 +57,14 @@ extension FormController : UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.FORM_QUESTION_CELL, for: indexPath) as! FormQuestionCell
         cell.question = self.questions[indexPath.row]
         cell.questionText.text = self.questions[indexPath.row].body
-        cell.question.choices = self.questions[indexPath.row].choices
+        print("height,", cell.questionText.contentSize.height)
+        let numLines = cell.questionText.contentSize.height / cell.questionText.font!.lineHeight
+        
+        cell.questionText.layoutIfNeeded()
         if cell.question.required == true {
             cell.requiredLabel.isHidden = false
         } else {
-            cell.requiredLabel.isHidden = true
+            cell.requiredLabel.textColor = .white
         }
         cell.optionTV.reloadData()
         cell.selectionStyle = .none
@@ -70,8 +73,12 @@ extension FormController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        return CGFloat(self.questions[indexPath.row].choices!.count * 40 + 80)
+        //return CGFloat(self.questions[indexPath.row].choices!.count * 40 + 80)
         //return 200
+//        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.FORM_QUESTION_CELL, for: indexPath) as! FormQuestionCell
+//        let height = cell.optionTV.heightConstaint?.constant
+
+        return UITableView.automaticDimension + 200
     }
     
 }
