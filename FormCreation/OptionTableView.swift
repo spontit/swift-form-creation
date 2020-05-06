@@ -11,7 +11,7 @@ import UIKit
 
 class OptionTableView: UITableView {
     
-    var rowNumer: Int?
+    //var rowNumer: Int?
     
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)

@@ -12,12 +12,13 @@ struct Question {
     var body : String?
     var choices : [String]?
     var allowMultipleSelection : Bool?
-    var selectedChoices : [String]?
+    var selectedChoices : [Int]?
     var required : Bool?
     
     init() {
         self.body = ""
         self.choices = []
+        self.selectedChoices = []
     }
     
     init(body: String?, choices: [String]?, allowMultipleSelection: Bool?, required: Bool?) {
@@ -25,9 +26,10 @@ struct Question {
         self.choices = choices
         self.allowMultipleSelection = allowMultipleSelection
         self.required = required
+        self.selectedChoices = []
     }
     
-    mutating func didSelectChoice(choice: String) {
+    mutating func didSelectChoice(choice: Int) {
         self.selectedChoices?.append(choice)
     }
     

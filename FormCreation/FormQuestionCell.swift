@@ -18,12 +18,12 @@ class FormQuestionCell : UITableViewCell {
     
     var questionText : UITextView = {
         let tv = UITextView()
-        tv.translatesAutoresizingMaskIntoConstraints = true
+        tv.translatesAutoresizingMaskIntoConstraints = false
         tv.textColor = .black
         tv.font = UIFont.systemFont(ofSize: 16)
         tv.isEditable = false
         tv.isScrollEnabled = false
-//        tv.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        tv.heightAnchor.constraint(equalToConstant: 80).isActive = true
         tv.sizeToFit()
         return tv
     }()
@@ -76,13 +76,13 @@ class FormQuestionCell : UITableViewCell {
         self.optionTV.dataSource = self
         self.optionTV.delegate = self
         self.optionTV.isScrollEnabled = false
-        self.optionTV.sizeToFit()
+//        self.optionTV.heightAnchor.constraint(equalToConstant: CGFloat(self.choices!.count * 40)).isActive = true
         self.optionTV.translatesAutoresizingMaskIntoConstraints = true
         self.questionText.text = self.question.body
         //self.questionText.heightConstaint?.constant = 40
         self.overallStack.addArrangedSubview(self.questionText)
         self.overallStack.addArrangedSubview(self.requiredLabel)
-        self.overallStack.addArrangedSubview(self.spacingView)
+        //self.overallStack.addArrangedSubview(self.spacingView)
         self.overallStack.addArrangedSubview(self.optionTV)
         self.contentView.addSubview(self.overallStack)
         self.overallStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 5).isActive = true
@@ -104,12 +104,23 @@ class FormQuestionCell : UITableViewCell {
                     } else {
                         cell.optionButton.isSelected = true
                     }
+                    self.question.selectedChoices = [sender.rowNumber!]
                 }
             } else {
-                self.question.selectedChoices?.append(self.question.choices![sender.rowNumber!])
+                //self.question.selectedChoices?.append(self.question.choices![sender.rowNumber!])
+                self.question.didSelectChoice(choice: sender.rowNumber!)
+                
             }
+            print("selected", self.question.selectedChoices)
         } else {
-            self.question.selectedChoices?.remove(at: (self.question.selectedChoices?.firstIndex(of: self.question.choices![sender.rowNumber!]))!)
+            if sender.rowNumber != nil && self.question.selectedChoices != nil {
+                let index = self.question.selectedChoices?.firstIndex(of: sender.rowNumber!)
+                if index != nil {
+                    self.question.selectedChoices?.remove(at: index!)
+                }
+                
+            }
+            print("deselected", self.question.selectedChoices)
         }
     }
 }

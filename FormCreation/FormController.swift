@@ -26,12 +26,21 @@ class FormController : UIViewController {
     //MARK:- Helper Functions
     private func setUp() {
         self.navigationItem.leftBarButtonItems = [UIBarButtonItem.getCancelButton(target: self, selector: #selector(self.cancel))]
+        self.navigationItem.rightBarButtonItems = [UIBarButtonItem.getDoneButton(target: self, selector: #selector(self.done))]
         self.view.backgroundColor = .white
-        self.questions.append(Question(body: "When do you buy coffee ajsfdkj asjfkjsak fsajfks fjsa fksfjsda fsjk?", choices: ["8am jfaskjfkwjkfjksfjkjfiwjfkjskjfwifji jsifjskfjwkjfk", "9am", "10am"], allowMultipleSelection: true, required: true))
+        self.questions.append(Question(body: "When do you buy coffee ajsfdkj asjfkjsak fsajfks fjsa fksfjsda fsjk?", choices: ["8am", "9am", "10am"], allowMultipleSelection: true, required: true))
         self.questions.append(Question(body: "What coffee do you like?", choices: ["Latte", "Mocha", "Black", "I'm not sure"], allowMultipleSelection: false, required: false))
         self.formTV.dataSource = self
         self.formTV.delegate = self
         self.formTV.reloadData()
+//        let cell = self.formTV.cellForRow(at: IndexPath(row: 0, section: 0)) as! FormQuestionCell
+//        cell.optionTV.heightAnchor.constraint(equalToConstant: 150).isActive = true
+//        cell.layoutIfNeeded()
+//        print (cell.questionText.text)
+//        cell.heightConstaint?.constant = 400
+//        cell.layoutIfNeeded()
+        self.formTV.beginUpdates()
+        self.formTV.endUpdates()
         self.view.addSubview(self.formTV)
         self.formTV.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 5).isActive = true
         self.formTV.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -5).isActive = true
@@ -46,12 +55,26 @@ class FormController : UIViewController {
         }
     }
     
+    @objc private func done() {
+        for question in self.questions {
+            if question.required == true {
+                if question.selectedChoices!.count < 1 {
+                    return
+                }
+            }
+        }
+        self.dismiss(animated: true) {
+            
+        }
+    }
+    
 }
 
 extension FormController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.questions.count
     }
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.FORM_QUESTION_CELL, for: indexPath) as! FormQuestionCell
@@ -67,18 +90,22 @@ extension FormController : UITableViewDelegate, UITableViewDataSource {
             cell.requiredLabel.textColor = .white
         }
         cell.optionTV.reloadData()
+        cell.optionTV.heightAnchor.constraint(equalToConstant: CGFloat(self.questions[indexPath.row].choices!.count * 40)).isActive = true
+        tableView.beginUpdates()
+        tableView.endUpdates()
         cell.selectionStyle = .none
         return cell
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        //return CGFloat(self.questions[indexPath.row].choices!.count * 40 + 80)
-        //return 200
-//        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.FORM_QUESTION_CELL, for: indexPath) as! FormQuestionCell
-//        let height = cell.optionTV.heightConstaint?.constant
-
-        return UITableView.automaticDimension + 200
-    }
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+////
+//        return CGFloat(self.questions[indexPath.row].choices!.count * 40 + 150)
+////        //return 200
+//////        let height = cell.optionTV.heightConstaint?.constant
+//////        let cell = tableView.cellForRow(at: indexPath) as! FormQuestionCell
+//////        print("auto", UITableView.automaticDimension)
+//////        print("tv", cell.questionText.heightConstaint?.constant)
+////        return UITableView.automaticDimension + CGFloat(self.questions[indexPath.row].choices!.count * 70)
+//    }
     
 }
