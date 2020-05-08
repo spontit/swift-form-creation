@@ -18,6 +18,7 @@ class FormOptionCell : UITableViewCell {
         tv.textColor = .black
         tv.font = UIFont.systemFont(ofSize: 16)
         tv.numberOfLines = 0
+        tv.sizeToFit()
         return tv
     }()
     
@@ -26,6 +27,7 @@ class FormOptionCell : UITableViewCell {
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.setImage(UIImage(imageLiteralResourceName: "Unselected"), for: .normal)
         btn.setImage(UIImage(imageLiteralResourceName: "Selected"), for: .selected)
+        btn.widthAnchor.constraint(equalToConstant: 20).isActive = true
         return btn
     }()
     
@@ -65,6 +67,7 @@ class FormOptionCell : UITableViewCell {
         self.overallStack.addArrangedSubview(self.optionButton)
         self.overallStack.addArrangedSubview(self.optionText)
         self.overallStack.addArrangedSubview(self.spacingView)
+        self.spacingView.widthAnchor.constraint(equalToConstant: 10).isActive = true
         self.contentView.addSubview(self.overallStack)
         self.overallStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 5).isActive = true
         self.overallStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -5).isActive = true

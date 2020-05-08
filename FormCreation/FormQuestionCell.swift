@@ -23,7 +23,6 @@ class FormQuestionCell : UITableViewCell {
         tv.font = UIFont.systemFont(ofSize: 16)
         tv.isEditable = false
         tv.isScrollEnabled = false
-        tv.heightAnchor.constraint(equalToConstant: 80).isActive = true
         tv.sizeToFit()
         return tv
     }()
@@ -76,19 +75,22 @@ class FormQuestionCell : UITableViewCell {
         self.optionTV.dataSource = self
         self.optionTV.delegate = self
         self.optionTV.isScrollEnabled = false
-//        self.optionTV.heightAnchor.constraint(equalToConstant: CGFloat(self.choices!.count * 40)).isActive = true
         self.optionTV.translatesAutoresizingMaskIntoConstraints = true
         self.questionText.text = self.question.body
-        //self.questionText.heightConstaint?.constant = 40
         self.overallStack.addArrangedSubview(self.questionText)
         self.overallStack.addArrangedSubview(self.requiredLabel)
-        //self.overallStack.addArrangedSubview(self.spacingView)
         self.overallStack.addArrangedSubview(self.optionTV)
         self.contentView.addSubview(self.overallStack)
         self.overallStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 5).isActive = true
         self.overallStack.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -5).isActive = true
         self.overallStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 5).isActive = true
         self.overallStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -5).isActive = true
+    }
+    
+    func getHeight(text: NSString, width:CGFloat, font: UIFont) -> CGFloat
+    {
+        let rect = text.boundingRect(with: CGSize.init(width: width, height: CGFloat.greatestFiniteMagnitude), options: ([NSStringDrawingOptions.usesLineFragmentOrigin,NSStringDrawingOptions.usesFontLeading]), attributes: [NSAttributedString.Key.font:font], context: nil)
+        return rect.size.height
     }
     
     //MARK:- @objc exposed functions
@@ -146,10 +148,6 @@ extension FormQuestionCell : UITableViewDelegate, UITableViewDataSource {
         cell.optionButton.setRowNumber(number: indexPath.row)
         cell.optionButton.addTarget(self, action: #selector(self.selectOption(_:)), for: .touchUpInside)
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
     }
     
 }

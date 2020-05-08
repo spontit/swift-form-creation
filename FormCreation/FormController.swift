@@ -16,6 +16,7 @@ class FormController : UIViewController {
     
     //MARK:- Internal Globals
     private var formTV = FormTableView(frame: .zero)
+    private var windowWidth : CGFloat!
     
     //MARK:- Overriden Functions
     override func viewDidLoad() {
@@ -25,20 +26,15 @@ class FormController : UIViewController {
     
     //MARK:- Helper Functions
     private func setUp() {
+        self.windowWidth = self.view.frame.width
         self.navigationItem.leftBarButtonItems = [UIBarButtonItem.getCancelButton(target: self, selector: #selector(self.cancel))]
         self.navigationItem.rightBarButtonItems = [UIBarButtonItem.getDoneButton(target: self, selector: #selector(self.done))]
         self.view.backgroundColor = .white
-        self.questions.append(Question(body: "When do you buy coffee ajsfdkj asjfkjsak fsajfks fjsa fksfjsda fsjk?", choices: ["8am", "9am", "10am"], allowMultipleSelection: true, required: true))
+        self.questions.append(Question(body: "When do you buy coffee ajsfdkj asjfkjsak fsajfks fjsa fksfjsda fsjk?", choices: ["8am sfkjsfkjkw sjkffj sk jkfwkfjnsahfhshj hsajfhjwh hsjfhsjfhwuhu", "9am", "10am"], allowMultipleSelection: true, required: true))
         self.questions.append(Question(body: "What coffee do you like?", choices: ["Latte", "Mocha", "Black", "I'm not sure"], allowMultipleSelection: false, required: false))
         self.formTV.dataSource = self
         self.formTV.delegate = self
         self.formTV.reloadData()
-//        let cell = self.formTV.cellForRow(at: IndexPath(row: 0, section: 0)) as! FormQuestionCell
-//        cell.optionTV.heightAnchor.constraint(equalToConstant: 150).isActive = true
-//        cell.layoutIfNeeded()
-//        print (cell.questionText.text)
-//        cell.heightConstaint?.constant = 400
-//        cell.layoutIfNeeded()
         self.formTV.beginUpdates()
         self.formTV.endUpdates()
         self.view.addSubview(self.formTV)
@@ -46,6 +42,12 @@ class FormController : UIViewController {
         self.formTV.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -5).isActive = true
         self.formTV.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 5).isActive = true
         self.formTV.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -5).isActive = true
+    }
+    
+    func getHeight(text:  NSString, width:CGFloat, font: UIFont) -> CGFloat
+    {
+        let rect = text.boundingRect(with: CGSize.init(width: width, height: CGFloat.greatestFiniteMagnitude), options: ([NSStringDrawingOptions.usesLineFragmentOrigin,NSStringDrawingOptions.usesFontLeading]), attributes: [NSAttributedString.Key.font:font], context: nil)
+        return rect.size.height
     }
     
     //MARK:- @objc exposed functions
@@ -80,32 +82,30 @@ extension FormController : UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.FORM_QUESTION_CELL, for: indexPath) as! FormQuestionCell
         cell.question = self.questions[indexPath.row]
         cell.questionText.text = self.questions[indexPath.row].body
-        print("height,", cell.questionText.contentSize.height)
-        let numLines = cell.questionText.contentSize.height / cell.questionText.font!.lineHeight
-        
+        let numLines = self.getHeight(text: NSString(string: cell.questionText.text), width: self.windowWidth - 20, font: UIFont.systemFont(ofSize: 16))
+        cell.questionText.heightAnchor.constraint(equalToConstant: numLines + 20).isActive = true
         cell.questionText.layoutIfNeeded()
+        var maxLine : Float = 0
+        var choiceLine : CGFloat = 0
+        for choice in cell.question.choices! {
+            choiceLine = self.getHeight(text: NSString(string: choice), width: self.windowWidth - 40, font: UIFont.systemFont(ofSize: 16))
+            if Float(choiceLine) > maxLine {
+                maxLine = Float(choiceLine)
+            }
+        }
+        cell.optionTV.rowHeight = CGFloat(maxLine * 2)
         if cell.question.required == true {
             cell.requiredLabel.isHidden = false
         } else {
             cell.requiredLabel.textColor = .white
         }
         cell.optionTV.reloadData()
-        cell.optionTV.heightAnchor.constraint(equalToConstant: CGFloat(self.questions[indexPath.row].choices!.count * 40)).isActive = true
-        tableView.beginUpdates()
-        tableView.endUpdates()
+        cell.optionTV.heightAnchor.constraint(equalToConstant: CGFloat(CGFloat(self.questions[indexPath.row].choices!.count) * (cell.optionTV.rowHeight + 10))).isActive = true
+        cell.optionTV.beginUpdates()
+        cell.optionTV.endUpdates()
+        cell.optionTV.layoutIfNeeded()
         cell.selectionStyle = .none
         return cell
     }
-    
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-////
-//        return CGFloat(self.questions[indexPath.row].choices!.count * 40 + 150)
-////        //return 200
-//////        let height = cell.optionTV.heightConstaint?.constant
-//////        let cell = tableView.cellForRow(at: indexPath) as! FormQuestionCell
-//////        print("auto", UITableView.automaticDimension)
-//////        print("tv", cell.questionText.heightConstaint?.constant)
-////        return UITableView.automaticDimension + CGFloat(self.questions[indexPath.row].choices!.count * 70)
-//    }
     
 }
