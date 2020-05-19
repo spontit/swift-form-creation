@@ -63,7 +63,7 @@ class ViewController: UIViewController {
     }
     
     @objc private func deleteQuestion(_ sender: DeleteOptionButton) {
-        if self.questions!.count >= 1 {
+        if self.questions!.count > 1 {
             self.questions?.remove(at: sender.rowNumber! - 1)
             self.questionTV.reloadData()
         }

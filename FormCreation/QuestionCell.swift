@@ -202,7 +202,7 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
     }
     
     @objc private func deleteOption(_ sender: DeleteOptionButton) {
-        if self.options!.count >= 1 {
+        if self.options!.count > 1 {
             self.options?.remove(at: sender.rowNumber! - 1)
             self.optionTV.reloadData()
         }
