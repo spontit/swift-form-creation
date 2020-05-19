@@ -35,7 +35,7 @@ class FormOptionTableView : UITableView {
         self.rowHeight = UITableView.automaticDimension
         self.estimatedRowHeight = self.rowHeight
         
-        self.allowsSelection = false
-        self.allowsMultipleSelection = false
+        self.allowsSelection = true
+        self.allowsMultipleSelection = true
     }
 }

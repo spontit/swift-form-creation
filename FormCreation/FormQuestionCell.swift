@@ -150,4 +150,9 @@ extension FormQuestionCell : UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        let cell = self.optionTV.cellForRow(at: indexPath) as! FormOptionCell
+        cell.optionButton.sendActions(for: .touchUpInside)
+    }
+    
 }

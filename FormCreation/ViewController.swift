@@ -59,7 +59,7 @@ class ViewController: UIViewController {
         self.questions?.append(Question())
         self.questionTV.reloadData()
         
-        
+        self.questionTV.scrollToRow(at: IndexPath(row: self.questions!.count - 1, section: 0), at: .bottom, animated: true)
     }
     
     @objc private func deleteQuestion(_ sender: DeleteOptionButton) {
@@ -94,7 +94,7 @@ class ViewController: UIViewController {
         for question in self.questions! {
             print("question: ", question.body, question.choices)
             if question.body!.count < 2 {
-                let alert = UIAlertController.init(title: "Alert", message: "Question should at least 2 characters long", preferredStyle: .alert)
+                let alert = UIAlertController.init(title: "Alert", message: "Question should be at least 2 characters long", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
                 self.present(alert, animated: true)
                 
@@ -132,9 +132,9 @@ class ViewController: UIViewController {
         self.questionTV.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     
-    @objc private func toggleAllowMultipleSelection(_ sender: DeleteOptionButton) {
+    @objc private func toggleAllowMultipleSelection(_ sender: RequiredSwitch) {
         sender.isSelected.toggle()
-        if sender.isSelected {
+        if sender.isOn {
             self.questions![sender.rowNumber!].allowMultipleSelection = true
         } else {
             self.questions![sender.rowNumber!].allowMultipleSelection = false

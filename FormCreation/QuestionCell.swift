@@ -40,12 +40,10 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
         return btn
     }()
     
-    var allowMultipleSelectionButton : DeleteOptionButton = {
-        let btn = DeleteOptionButton()
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.setImage(UIImage(imageLiteralResourceName: "Unselected"), for: .normal)
-        btn.setImage(UIImage(imageLiteralResourceName: "Selected"), for: .selected)
-        return btn
+    var allowMultipleSelectionButton : RequiredSwitch = {
+        let swc = RequiredSwitch()
+        swc.translatesAutoresizingMaskIntoConstraints = false
+        return swc
     }()
     
     //MARK:- Internal Globals
@@ -59,7 +57,7 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
     private let allowMultipleSelectionLabel : UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Allow Multiple Selection"
+        label.text = "Multiple Selection"
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = .black
         return label
@@ -155,12 +153,12 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
         self.addOptionButton.addTarget(self, action: #selector(self.addOption), for: .touchUpInside)
         
         self.topStack.addArrangedSubview(self.questionEntry)
-        self.topStack.addArrangedSubview(self.requiredSwitch)
-        self.topStack.addArrangedSubview(self.requiredLabel)
-        self.requiredLabel.bottomAnchor.constraint(equalTo: self.requiredSwitch.bottomAnchor, constant: -15).isActive = true
+        
         self.middleStack.addArrangedSubview(self.optionTV)
         self.buttonStack.addArrangedSubview(self.addOptionButton)
         self.bottomStack.addArrangedSubview(self.spacingView)
+        self.bottomStack.addArrangedSubview(self.requiredSwitch)
+        self.bottomStack.addArrangedSubview(self.requiredLabel)
         self.bottomStack.addArrangedSubview(self.allowMultipleSelectionButton)
         self.bottomStack.addArrangedSubview(self.allowMultipleSelectionLabel)
         self.bottomStack.addArrangedSubview(self.deleteButton)
@@ -199,6 +197,10 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
         self.options?.append("")
         print(self.options!.count)
         self.optionTV.reloadData()
+        if self.options!.count > 4 {
+            self.optionTV.scrollToRow(at: IndexPath(row: self.options!.count - 1, section: 0), at: .bottom, animated: true)
+            self.optionTV.flashScrollIndicators()
+        }
     }
     
     @objc private func deleteOption(_ sender: DeleteOptionButton) {

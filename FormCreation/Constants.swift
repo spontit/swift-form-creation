@@ -208,7 +208,7 @@ extension UIFont
 extension UIBarButtonItem {
     static func getCancelButton(target: Any, selector: Selector) -> UIBarButtonItem {
         let cancelBtn = UIBarButtonItem(title: "Cancel", style: .plain, target: target, action: selector)
-        cancelBtn.tintColor = UIColor.green
+        cancelBtn.tintColor = UIColor.gray
         return cancelBtn
     }
     
