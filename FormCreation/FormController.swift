@@ -17,11 +17,20 @@ class FormController : UIViewController {
     //MARK:- Internal Globals
     private var formTV = FormTableView(frame: .zero)
     private var windowWidth : CGFloat!
+    private var donePressed : Bool = false
     
     //MARK:- Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUp()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if self.donePressed == true {
+            let alert = UIAlertController.init(title: "Alert", message: "Your answer has saved", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+            self.view.window?.rootViewController!.present(alert, animated: true, completion: nil)
+        }
     }
     
     //MARK:- Helper Functions
@@ -58,16 +67,7 @@ class FormController : UIViewController {
     }
     
     @objc private func done() {
-//        for question in self.questions {
-//            if question.required == true {
-//                if question.selectedChoices!.count < 1 {
-//                    return
-//                }
-//            }
-//        }
-        let alert = UIAlertController.init(title: "Alert", message: "Your answer has saved", preferredStyle: .alert)
-        //            alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
-                    self.present(alert, animated: true)
+        self.donePressed = true
         self.dismiss(animated: true) {
             
         }
