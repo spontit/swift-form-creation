@@ -8,9 +8,26 @@
 
 import UIKit
 
+protocol SaveFormDel {
+    func didSaveForm(form: Form)
+}
+
+struct FormInfoToPass {
+    var _saveFormDel : SaveFormDel!
+    var _formSaved : Form?
+    
+    init(saveFormDel: SaveFormDel!, formSaved: Form?) {
+        self._saveFormDel = saveFormDel
+        self._formSaved = formSaved
+    }
+}
+
 class ViewController: UIViewController {
     
-    //MARK:- Internal Globals
+    // MARK:- Globals
+    var formInfoToPass : FormInfoToPass!
+    
+    // MARK:- Internal Globals
     private var questionTV : QuestionTableView = QuestionTableView(frame: .zero)
     private var questions : [Question]? = [Question()]
     private var keyboardHeight : CGFloat?
@@ -26,7 +43,7 @@ class ViewController: UIViewController {
         return btn
     }()
     
-    //MARK:- Overriden Functions
+    // MARK:- Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -34,7 +51,16 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-
+    
+    init(info: FormInfoToPass) {
+        super.init(nibName: nil, bundle: nil)
+        self.formInfoToPass = info
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     //MARK:- Helper Functions
     private func setUp() {
         self.view.backgroundColor = .white
@@ -89,6 +115,17 @@ class ViewController: UIViewController {
                 options.append(optionCell.optionEntry.text!)
             }
             self.questions![row].setChoices(choices: options)
+            if cell.allowMultipleSelectionButton.isOn {
+                self.questions![row].allowMultipleSelection = true
+            } else {
+                self.questions![row].allowMultipleSelection = false
+            }
+            
+            if cell.requiredSwitch.isOn {
+                self.questions![row].required = true
+            } else {
+                self.questions![row].required = false
+            }
         }
         
         for question in self.questions! {
@@ -100,7 +137,10 @@ class ViewController: UIViewController {
                 
                 return
             }
-            if Set(arrayLiteral: question.choices).count < question.choices!.count {
+            let temp = question.choices?.removeDuplicates()
+            if temp!.count < question.choices!.count {
+                print("set", Set(arrayLiteral: question.choices), Set(arrayLiteral: question.choices).count)
+                print("array", question.choices, question.choices!.count)
                 let alert = UIAlertController.init(title: "Alert", message: "Answer cannot be duplicate", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
                 self.present(alert, animated: true)
@@ -109,6 +149,7 @@ class ViewController: UIViewController {
         }
         
         print("questions", self.questions)
+        self.formInfoToPass._saveFormDel.didSaveForm(form: Form(questions: self.questions))
         self.dismiss(animated: true) {
             
         }
@@ -132,16 +173,6 @@ class ViewController: UIViewController {
         self.questionTV.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     
-    @objc private func toggleAllowMultipleSelection(_ sender: RequiredSwitch) {
-        sender.isSelected.toggle()
-        if sender.isOn {
-            self.questions![sender.rowNumber!].allowMultipleSelection = true
-        } else {
-            self.questions![sender.rowNumber!].allowMultipleSelection = false
-        }
-    }
-    
-    
 
 }
 
@@ -154,8 +185,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.QUESTION_CELL, for: indexPath) as! QuestionCell
         cell.deleteButton.setRowNumber(number: indexPath.row)
         cell.deleteButton.addTarget(self, action: #selector(self.deleteQuestion(_:)), for: .touchUpInside)
-        cell.allowMultipleSelectionButton.setRowNumber(number: indexPath.row)
-        cell.allowMultipleSelectionButton.addTarget(self, action: #selector(self.toggleAllowMultipleSelection(_:)), for: .touchUpInside)
         return cell
     }
     
@@ -174,4 +203,5 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         self.questions![indexPath.row].setChoices(choices: options)
     }
 }
+
 

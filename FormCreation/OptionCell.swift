@@ -75,7 +75,7 @@ class OptionCell : UITableViewCell, UITextFieldDelegate {
         self.cellStack.addArrangedSubview(self.optionImage)
         self.cellStack.addArrangedSubview(self.spacingView)
         self.cellStack.addArrangedSubview(self.optionEntry)
-        self.optionEntry.delegate = self
+        //self.optionEntry.delegate = self
         self.cellStack.addArrangedSubview(self.deleteButton)
         self.contentView.addSubview(self.cellStack)
         self.cellStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 5).isActive = true

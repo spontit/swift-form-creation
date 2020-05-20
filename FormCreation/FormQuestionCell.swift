@@ -109,7 +109,6 @@ class FormQuestionCell : UITableViewCell {
                     self.question.selectedChoices = [sender.rowNumber!]
                 }
             } else {
-                //self.question.selectedChoices?.append(self.question.choices![sender.rowNumber!])
                 self.question.didSelectChoice(choice: sender.rowNumber!)
                 
             }
@@ -147,7 +146,18 @@ extension FormQuestionCell : UITableViewDelegate, UITableViewDataSource {
         }
         cell.optionButton.setRowNumber(number: indexPath.row)
         cell.optionButton.addTarget(self, action: #selector(self.selectOption(_:)), for: .touchUpInside)
+        for option in self.question.selectedChoices! {
+            print ("option", option)
+            if indexPath.row == option {
+                cell.optionButton.isSelected = true
+            }
+        }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = self.optionTV.cellForRow(at: indexPath) as! FormOptionCell
+        cell.optionButton.sendActions(for: .touchUpInside)
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {

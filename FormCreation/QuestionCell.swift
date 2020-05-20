@@ -46,10 +46,12 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
         return swc
     }()
     
+    let requiredSwitch = RequiredSwitch()
+    
     //MARK:- Internal Globals
     
     
-    private let requiredSwitch = RequiredSwitch()
+    
     //private let allowMultipleSelectionSwitch = UISwitch()
     private var optionTVConstraint1 : NSLayoutConstraint!
     private var optionTVConstraint2 : NSLayoutConstraint!
@@ -182,7 +184,14 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        return true
+        if textField != self.questionEntry {
+            if textField.tag < self.options!.count - 1 {
+                let cell = self.optionTV.cellForRow(at: IndexPath(row: textField.tag + 1, section: 0)) as! OptionCell
+                cell.optionEntry.becomeFirstResponder()
+            }
+            
+        }
+        return false
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -223,6 +232,8 @@ extension QuestionCell : UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = .none
         cell.deleteButton.setRowNumber(number: indexPath.row)
         cell.deleteButton.addTarget(self, action: #selector(self.deleteOption(_:)), for: .touchUpInside)
+        cell.optionEntry.delegate = self
+        cell.optionEntry.tag = indexPath.row
         return cell
     }
     

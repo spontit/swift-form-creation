@@ -9,17 +9,34 @@
 import Foundation
 import UIKit
 
+protocol FillFormDel {
+    func saveForm(form: Form)
+}
+
+struct FilledFormToPass {
+    var _fillFormDel : FillFormDel!
+    var form : Form?
+    
+    init(fillFormDel: FillFormDel!, form: Form?) {
+        self._fillFormDel = fillFormDel
+        self.form = form
+    }
+}
+
 class FormController : UIViewController {
     
-    //MARK:- Test Data
+    // Mark:- Globals
+    var info: FilledFormToPass!
+    
+    // MARK:- Test Data
     private var questions : [Question] = []
     
-    //MARK:- Internal Globals
+    // MARK:- Internal Globals
     private var formTV = FormTableView(frame: .zero)
     private var windowWidth : CGFloat!
     private var donePressed : Bool = false
     
-    //MARK:- Overriden Functions
+    // MARK:- Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUp()
@@ -33,14 +50,22 @@ class FormController : UIViewController {
         }
     }
     
-    //MARK:- Helper Functions
+    init(info: FilledFormToPass) {
+        super.init(nibName: nil, bundle: nil)
+        self.info = info
+        self.questions = info.form!.questions!
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK:- Helper Functions
     private func setUp() {
         self.windowWidth = self.view.frame.width
         self.navigationItem.leftBarButtonItems = [UIBarButtonItem.getCancelButton(target: self, selector: #selector(self.cancel))]
         self.navigationItem.rightBarButtonItems = [UIBarButtonItem.getDoneButton(target: self, selector: #selector(self.done))]
         self.view.backgroundColor = .white
-        self.questions.append(Question(body: "When do you buy coffee ajsfdkj asjfkjsak fsajfks fjsa fksfjsda fsjk?", choices: ["8am sfkjsfkjkw sjkffj sk jkfwkfjnsahfhshj hsajfhjwh hsjfhsjfhwuhu", "9am", "10am"], allowMultipleSelection: true, required: true))
-        self.questions.append(Question(body: "What coffee do you like?", choices: ["Latte", "Mocha", "Black", "I'm not sure"], allowMultipleSelection: false, required: false))
         self.formTV.dataSource = self
         self.formTV.delegate = self
         self.formTV.reloadData()
@@ -59,7 +84,7 @@ class FormController : UIViewController {
         return rect.size.height
     }
     
-    //MARK:- @objc exposed functions
+    // MARK:- @objc exposed functions
     @objc private func cancel() {
         self.dismiss(animated: true) {
             
@@ -68,6 +93,12 @@ class FormController : UIViewController {
     
     @objc private func done() {
         self.donePressed = true
+        
+        for i in 0..<self.questions.count {
+            let cell = self.formTV.cellForRow(at: IndexPath(row: i, section: 0)) as! FormQuestionCell
+            self.questions[i].selectedChoices = cell.question.selectedChoices
+        }
+        self.info._fillFormDel.saveForm(form: Form(questions: self.questions))
         self.dismiss(animated: true) {
             
         }
@@ -112,3 +143,4 @@ extension FormController : UITableViewDelegate, UITableViewDataSource {
     }
     
 }
+

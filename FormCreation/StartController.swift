@@ -11,7 +11,8 @@ import UIKit
 
 class StartController : UIViewController {
     
-    //MARK:- Internal Globals
+    // MARK:- Internal Globals
+    private var form : Form = Form(questions: [])
     private var startButton : UIButton = {
         let btn = UIButton()
         btn.translatesAutoresizingMaskIntoConstraints = false
@@ -34,13 +35,13 @@ class StartController : UIViewController {
         return btn
     }()
     
-    //MARK:- Overriden functions
+    // MARK:- Overriden functions
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUp()
     }
     
-    //MARK:- Helper functions
+    // MARK:- Helper functions
     private func setUp() {
         self.view.addSubview(self.startButton)
         self.view.addSubview(self.showButton)
@@ -52,18 +53,32 @@ class StartController : UIViewController {
         self.showButton.leadingAnchor.constraint(equalTo: self.startButton.leadingAnchor, constant: 0).isActive = true
     }
     
-    //MARK:- @objc exposed functions
+    // MARK:- @objc exposed functions
     @objc private func startPressed(_ sender: Any) {
-        let createFormVC = ViewController()
+        let createFormVC = ViewController(info: FormInfoToPass(saveFormDel: self, formSaved: Form(questions: [])))
         let navVC = UINavigationController(rootViewController: createFormVC)
         navVC.modalPresentationStyle = .fullScreen
         self.present(navVC, animated: true)
     }
     
     @objc private func showPressed(_ sender: Any) {
-        let createFormVC = FormController()
+        let createFormVC = FormController(info: FilledFormToPass(fillFormDel: self, form: self.form))
         let navVC = UINavigationController(rootViewController: createFormVC)
         navVC.modalPresentationStyle = .fullScreen
         self.present(navVC, animated: true)
     }
+}
+
+extension StartController : SaveFormDel {
+    func didSaveForm(form: Form) {
+        self.form = form
+    }
+}
+
+extension StartController : FillFormDel {
+    func saveForm(form: Form) {
+        self.form = form
+    }
+    
+    
 }
