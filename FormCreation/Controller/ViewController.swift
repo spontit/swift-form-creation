@@ -124,6 +124,15 @@ class ViewController: UIViewController {
                 
                 return
             }
+            for choice in question.choices! {
+                if choice == "" {
+                    let alert = UIAlertController.init(title: "Alert", message: "Answer cannot be empty", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+                    self.present(alert, animated: true)
+                    
+                    return
+                }
+            }
             let temp = question.choices?.removeDuplicates()
             if temp!.count < question.choices!.count {
                 print("set", Set(arrayLiteral: question.choices), Set(arrayLiteral: question.choices).count)
