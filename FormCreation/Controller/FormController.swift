@@ -16,7 +16,7 @@ class FormController : UIViewController {
     var info: FilledFormToPass!
     
     // MARK:- Test Data
-    private var questions : [Question] = [Question(body: "When do you buy coffee", choices: ["8am", "9am"], allowMultipleSelection: true, required: true)]
+    private var questions : [Question] = []
     
     // MARK:- Internal Globals
     private var formTV = FormTableView(frame: .zero)
