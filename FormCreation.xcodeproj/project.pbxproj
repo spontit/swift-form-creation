@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		80D75434607525C5EFE9711C /* libPods-FormCreation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06DAF5BCF152855E31607201 /* libPods-FormCreation.a */; };
+		A26EDD5D248B3BA000087A4B /* SaveFormDel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26EDD5C248B3BA000087A4B /* SaveFormDel.swift */; };
+		A26EDD5F248B3BC200087A4B /* FormInfoToPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26EDD5E248B3BC200087A4B /* FormInfoToPass.swift */; };
+		A26EDD61248B3C0800087A4B /* FillFormDel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26EDD60248B3C0800087A4B /* FillFormDel.swift */; };
+		A26EDD63248B3C2B00087A4B /* FilledFormToPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26EDD62248B3C2B00087A4B /* FilledFormToPass.swift */; };
 		A27D3E15245207E40035EF01 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27D3E14245207E40035EF01 /* AppDelegate.swift */; };
 		A27D3E17245207E40035EF01 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27D3E16245207E40035EF01 /* SceneDelegate.swift */; };
 		A27D3E19245207E40035EF01 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27D3E18245207E40035EF01 /* ViewController.swift */; };
@@ -66,6 +70,10 @@
 		04B9FEC7BA82B31920A60819 /* Pods-FormCreation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FormCreation.release.xcconfig"; path = "Target Support Files/Pods-FormCreation/Pods-FormCreation.release.xcconfig"; sourceTree = "<group>"; };
 		06DAF5BCF152855E31607201 /* libPods-FormCreation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FormCreation.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		91B404D390361A0897C6D7BA /* Pods-FormCreation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FormCreation.debug.xcconfig"; path = "Target Support Files/Pods-FormCreation/Pods-FormCreation.debug.xcconfig"; sourceTree = "<group>"; };
+		A26EDD5C248B3BA000087A4B /* SaveFormDel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveFormDel.swift; sourceTree = "<group>"; };
+		A26EDD5E248B3BC200087A4B /* FormInfoToPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormInfoToPass.swift; sourceTree = "<group>"; };
+		A26EDD60248B3C0800087A4B /* FillFormDel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillFormDel.swift; sourceTree = "<group>"; };
+		A26EDD62248B3C2B00087A4B /* FilledFormToPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilledFormToPass.swift; sourceTree = "<group>"; };
 		A27D3E11245207E40035EF01 /* FormCreation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FormCreation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A27D3E14245207E40035EF01 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A27D3E16245207E40035EF01 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -131,6 +139,31 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		A26EDD5A248B3AF900087A4B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A27D3E4E24524E000035EF01 /* OptionTableView.swift */,
+				A27D3E46245222D70035EF01 /* QuestionCell.swift */,
+				A27D3E4C24523FD20035EF01 /* OptionCell.swift */,
+				A27D3E50245263AA0035EF01 /* QuestionTableView.swift */,
+				A27D3E65245CCB300035EF01 /* FormQuestionCell.swift */,
+				A27D3E67245CDB470035EF01 /* FormOptionCell.swift */,
+				A27D3E6B245CE5D80035EF01 /* FormOptionTableView.swift */,
+				A27D3E6D245CF6B00035EF01 /* FormTableView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A26EDD5B248B3B6200087A4B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A27D3E18245207E40035EF01 /* ViewController.swift */,
+				A27D3E60245780860035EF01 /* StartController.swift */,
+				A27D3E69245CDE520035EF01 /* FormController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		A27D3E08245207E40035EF01 = {
 			isa = PBXGroup;
 			children = (
@@ -156,26 +189,16 @@
 		A27D3E13245207E40035EF01 /* FormCreation */ = {
 			isa = PBXGroup;
 			children = (
-				A27D3E72246F2A0E0035EF01 /* New Group */,
+				A26EDD5B248B3B6200087A4B /* Controller */,
+				A26EDD5A248B3AF900087A4B /* View */,
+				A27D3E72246F2A0E0035EF01 /* Model */,
 				A27D3E14245207E40035EF01 /* AppDelegate.swift */,
 				A27D3E16245207E40035EF01 /* SceneDelegate.swift */,
-				A27D3E18245207E40035EF01 /* ViewController.swift */,
 				A27D3E1A245207E40035EF01 /* Main.storyboard */,
 				A27D3E1D245207E90035EF01 /* Assets.xcassets */,
 				A27D3E1F245207E90035EF01 /* LaunchScreen.storyboard */,
 				A27D3E22245207E90035EF01 /* Info.plist */,
-				A27D3E442452087C0035EF01 /* Form.swift */,
-				A27D3E46245222D70035EF01 /* QuestionCell.swift */,
 				A27D3E4A2452397A0035EF01 /* Constants.swift */,
-				A27D3E4C24523FD20035EF01 /* OptionCell.swift */,
-				A27D3E4E24524E000035EF01 /* OptionTableView.swift */,
-				A27D3E50245263AA0035EF01 /* QuestionTableView.swift */,
-				A27D3E60245780860035EF01 /* StartController.swift */,
-				A27D3E65245CCB300035EF01 /* FormQuestionCell.swift */,
-				A27D3E67245CDB470035EF01 /* FormOptionCell.swift */,
-				A27D3E69245CDE520035EF01 /* FormController.swift */,
-				A27D3E6B245CE5D80035EF01 /* FormOptionTableView.swift */,
-				A27D3E6D245CF6B00035EF01 /* FormTableView.swift */,
 			);
 			path = FormCreation;
 			sourceTree = "<group>";
@@ -198,11 +221,16 @@
 			path = FormCreationUITests;
 			sourceTree = "<group>";
 		};
-		A27D3E72246F2A0E0035EF01 /* New Group */ = {
+		A27D3E72246F2A0E0035EF01 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A27D3E442452087C0035EF01 /* Form.swift */,
+				A26EDD5C248B3BA000087A4B /* SaveFormDel.swift */,
+				A26EDD5E248B3BC200087A4B /* FormInfoToPass.swift */,
+				A26EDD60248B3C0800087A4B /* FillFormDel.swift */,
+				A26EDD62248B3C2B00087A4B /* FilledFormToPass.swift */,
 			);
-			path = "New Group";
+			path = Model;
 			sourceTree = "<group>";
 		};
 		BAEB03C84B4D2065D21440C6 /* Frameworks */ = {
@@ -372,9 +400,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A27D3E19245207E40035EF01 /* ViewController.swift in Sources */,
+				A26EDD63248B3C2B00087A4B /* FilledFormToPass.swift in Sources */,
 				A27D3E452452087C0035EF01 /* Form.swift in Sources */,
 				A27D3E4D24523FD20035EF01 /* OptionCell.swift in Sources */,
 				A27D3E51245263AA0035EF01 /* QuestionTableView.swift in Sources */,
+				A26EDD5D248B3BA000087A4B /* SaveFormDel.swift in Sources */,
 				A27D3E15245207E40035EF01 /* AppDelegate.swift in Sources */,
 				A27D3E4F24524E000035EF01 /* OptionTableView.swift in Sources */,
 				A27D3E61245780860035EF01 /* StartController.swift in Sources */,
@@ -382,7 +412,9 @@
 				A27D3E6E245CF6B00035EF01 /* FormTableView.swift in Sources */,
 				A27D3E17245207E40035EF01 /* SceneDelegate.swift in Sources */,
 				A27D3E68245CDB470035EF01 /* FormOptionCell.swift in Sources */,
+				A26EDD5F248B3BC200087A4B /* FormInfoToPass.swift in Sources */,
 				A27D3E47245222D70035EF01 /* QuestionCell.swift in Sources */,
+				A26EDD61248B3C0800087A4B /* FillFormDel.swift in Sources */,
 				A27D3E4B2452397A0035EF01 /* Constants.swift in Sources */,
 				A27D3E6C245CE5D80035EF01 /* FormOptionTableView.swift in Sources */,
 				A27D3E66245CCB310035EF01 /* FormQuestionCell.swift in Sources */,

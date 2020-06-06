@@ -9,19 +9,6 @@
 import Foundation
 import UIKit
 
-protocol FillFormDel {
-    func saveForm(form: Form)
-}
-
-struct FilledFormToPass {
-    var _fillFormDel : FillFormDel!
-    var form : Form?
-    
-    init(fillFormDel: FillFormDel!, form: Form?) {
-        self._fillFormDel = fillFormDel
-        self.form = form
-    }
-}
 
 class FormController : UIViewController {
     
@@ -29,7 +16,7 @@ class FormController : UIViewController {
     var info: FilledFormToPass!
     
     // MARK:- Test Data
-    private var questions : [Question] = []
+    private var questions : [Question] = [Question(body: "When do you buy coffee", choices: ["8am", "9am"], allowMultipleSelection: true, required: true)]
     
     // MARK:- Internal Globals
     private var formTV = FormTableView(frame: .zero)
@@ -78,7 +65,7 @@ class FormController : UIViewController {
         self.formTV.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -5).isActive = true
     }
     
-    func getHeight(text:  NSString, width:CGFloat, font: UIFont) -> CGFloat
+    func getHeight(text: NSString, width:CGFloat, font: UIFont) -> CGFloat
     {
         let rect = text.boundingRect(with: CGSize.init(width: width, height: CGFloat.greatestFiniteMagnitude), options: ([NSStringDrawingOptions.usesLineFragmentOrigin,NSStringDrawingOptions.usesFontLeading]), attributes: [NSAttributedString.Key.font:font], context: nil)
         return rect.size.height
@@ -96,7 +83,7 @@ class FormController : UIViewController {
         
         for i in 0..<self.questions.count {
             let cell = self.formTV.cellForRow(at: IndexPath(row: i, section: 0)) as! FormQuestionCell
-            self.questions[i].selectedChoices = cell.question.selectedChoices
+            self.questions[i].selectedChoices = cell.question?.selectedChoices
         }
         self.info._fillFormDel.saveForm(form: Form(questions: self.questions))
         self.dismiss(animated: true) {
@@ -115,7 +102,6 @@ extension FormController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.FORM_QUESTION_CELL, for: indexPath) as! FormQuestionCell
         cell.question = self.questions[indexPath.row]
-        cell.questionText.text = self.questions[indexPath.row].body
         let numLines = self.getHeight(text: NSString(string: cell.questionText.text), width: self.windowWidth - 20, font: UIFont.systemFont(ofSize: 16))
         cell.questionText.heightAnchor.constraint(equalToConstant: numLines + 20).isActive = true
         cell.questionText.layoutIfNeeded()
@@ -128,11 +114,6 @@ extension FormController : UITableViewDelegate, UITableViewDataSource {
             }
         }
         cell.optionTV.rowHeight = CGFloat(maxLine * 2)
-        if cell.question.required == true {
-            cell.requiredLabel.isHidden = false
-        } else {
-            cell.requiredLabel.textColor = .white
-        }
         cell.optionTV.reloadData()
         cell.optionTV.heightAnchor.constraint(equalToConstant: CGFloat(CGFloat(self.questions[indexPath.row].choices!.count) * (cell.optionTV.rowHeight + 10))).isActive = true
         cell.optionTV.beginUpdates()

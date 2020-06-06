@@ -8,19 +8,6 @@
 
 import UIKit
 
-protocol SaveFormDel {
-    func didSaveForm(form: Form)
-}
-
-struct FormInfoToPass {
-    var _saveFormDel : SaveFormDel!
-    var _formSaved : Form?
-    
-    init(saveFormDel: SaveFormDel!, formSaved: Form?) {
-        self._saveFormDel = saveFormDel
-        self._formSaved = formSaved
-    }
-}
 
 class ViewController: UIViewController {
     

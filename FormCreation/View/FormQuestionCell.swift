@@ -12,7 +12,8 @@ import UIKit
 class FormQuestionCell : UITableViewCell {
     
     //MARK:- Globals
-    var question = Question()
+    
+    
     var choices : [String]?
     var maxOptionLine : Int = 0
     
@@ -24,6 +25,7 @@ class FormQuestionCell : UITableViewCell {
         tv.isEditable = false
         tv.isScrollEnabled = false
         tv.sizeToFit()
+
         return tv
     }()
     
@@ -37,6 +39,13 @@ class FormQuestionCell : UITableViewCell {
     }()
     
     var optionTV = FormOptionTableView(frame: .zero)
+    
+    var question : Question! {
+        didSet {
+            self.questionText.text = self.question?.body
+            self.requiredLabel.isHidden = !(self.question?.required)!
+        }
+    }
     
     //MARK:- Internal Globals
     
@@ -76,7 +85,6 @@ class FormQuestionCell : UITableViewCell {
         self.optionTV.delegate = self
         self.optionTV.isScrollEnabled = false
         self.optionTV.translatesAutoresizingMaskIntoConstraints = true
-        self.questionText.text = self.question.body
         self.overallStack.addArrangedSubview(self.questionText)
         self.overallStack.addArrangedSubview(self.requiredLabel)
         self.overallStack.addArrangedSubview(self.optionTV)
