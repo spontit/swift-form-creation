@@ -30,8 +30,8 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
         return tv
     }()
     
-    var deleteButton : DeleteOptionButton = {
-        let btn = DeleteOptionButton()
+    var deleteButton : UIButton = {
+        let btn = UIButton()
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.setImage(UIImage(imageLiteralResourceName: "DeleteQuestion"), for: .normal)
         btn.giveBorder(color: .black)
@@ -188,6 +188,8 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
             if textField.tag < self.options!.count - 1 {
                 let cell = self.optionTV.cellForRow(at: IndexPath(row: textField.tag + 1, section: 0)) as! OptionCell
                 cell.optionEntry.becomeFirstResponder()
+            } else {
+                self.addOptionButton.sendActions(for: .touchUpInside)
             }
             
         }
@@ -195,28 +197,45 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField.text != nil {
+        if textField == self.questionEntry && textField.text != nil {
             self.question = textField.text
         }
     }
     
+    @objc func textFieldDidBeginEditing(_ textField: UITextField) {
+        guard textField != self.questionEntry else { return }
+        if textField.text!.count > 50 {
+            print(">50")
+            textField.giveBorder(color: .red)
+        } else {
+            textField.giveBorder(color: .lightGray)
+        }
+    }
+    
+    
     //MARK:- @objc exposed functions
-    @objc private func addOption(_ sender: Any) {
-        print("added")
+    @objc private func addOption(_ sender: UIButton) {
         self.options?.append("")
-        print(self.options!.count)
         self.optionTV.reloadData()
         if self.options!.count > 4 {
             self.optionTV.scrollToRow(at: IndexPath(row: self.options!.count - 1, section: 0), at: .bottom, animated: true)
             self.optionTV.flashScrollIndicators()
         }
+        self.optionTV.reloadData()
+        let cell = self.optionTV.cellForRow(at: IndexPath(row: self.options!.count - 1, section: 0)) as? OptionCell
+        print("self.options.count", self.options!.count - 1)
+        if cell != nil {
+            cell!.optionEntry.becomeFirstResponder()
+        }
+        
     }
     
-    @objc private func deleteOption(_ sender: DeleteOptionButton) {
-        if self.options!.count > 1 {
-            self.options?.remove(at: sender.rowNumber! - 1)
-            self.optionTV.reloadData()
-        }
+    @objc private func deleteOption(_ sender: UIButton) {
+        guard self.options!.count > 1 else { return }
+        self.options?.remove(at: sender.tag - 1)
+        let cell = self.optionTV.cellForRow(at: IndexPath(row: sender.tag, section: 0)) as! OptionCell
+        cell.optionEntry.text = ""
+        self.optionTV.reloadData()
     }
     
     
@@ -230,9 +249,10 @@ extension QuestionCell : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.OPTION_CELL, for: indexPath) as! OptionCell
         cell.selectionStyle = .none
-        cell.deleteButton.setRowNumber(number: indexPath.row)
+        cell.deleteButton.tag = indexPath.row
         cell.deleteButton.addTarget(self, action: #selector(self.deleteOption(_:)), for: .touchUpInside)
         cell.optionEntry.delegate = self
+        cell.optionEntry.addTarget(self, action: #selector(self.textFieldDidBeginEditing(_:)), for: .editingChanged)
         cell.optionEntry.tag = indexPath.row
         return cell
     }

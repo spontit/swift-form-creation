@@ -13,7 +13,6 @@
 		A26EDD61248B3C0800087A4B /* FillFormDel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26EDD60248B3C0800087A4B /* FillFormDel.swift */; };
 		A26EDD63248B3C2B00087A4B /* FilledFormToPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26EDD62248B3C2B00087A4B /* FilledFormToPass.swift */; };
 		A27D3E15245207E40035EF01 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27D3E14245207E40035EF01 /* AppDelegate.swift */; };
-		A27D3E17245207E40035EF01 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27D3E16245207E40035EF01 /* SceneDelegate.swift */; };
 		A27D3E19245207E40035EF01 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A27D3E18245207E40035EF01 /* ViewController.swift */; };
 		A27D3E1C245207E40035EF01 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A27D3E1A245207E40035EF01 /* Main.storyboard */; };
 		A27D3E1E245207E90035EF01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A27D3E1D245207E90035EF01 /* Assets.xcassets */; };
@@ -76,7 +75,6 @@
 		A26EDD62248B3C2B00087A4B /* FilledFormToPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilledFormToPass.swift; sourceTree = "<group>"; };
 		A27D3E11245207E40035EF01 /* FormCreation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FormCreation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A27D3E14245207E40035EF01 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A27D3E16245207E40035EF01 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		A27D3E18245207E40035EF01 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A27D3E1B245207E40035EF01 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A27D3E1D245207E90035EF01 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -193,7 +191,6 @@
 				A26EDD5A248B3AF900087A4B /* View */,
 				A27D3E72246F2A0E0035EF01 /* Model */,
 				A27D3E14245207E40035EF01 /* AppDelegate.swift */,
-				A27D3E16245207E40035EF01 /* SceneDelegate.swift */,
 				A27D3E1A245207E40035EF01 /* Main.storyboard */,
 				A27D3E1D245207E90035EF01 /* Assets.xcassets */,
 				A27D3E1F245207E90035EF01 /* LaunchScreen.storyboard */,
@@ -410,7 +407,6 @@
 				A27D3E61245780860035EF01 /* StartController.swift in Sources */,
 				A27D3E6A245CDE520035EF01 /* FormController.swift in Sources */,
 				A27D3E6E245CF6B00035EF01 /* FormTableView.swift in Sources */,
-				A27D3E17245207E40035EF01 /* SceneDelegate.swift in Sources */,
 				A27D3E68245CDB470035EF01 /* FormOptionCell.swift in Sources */,
 				A26EDD5F248B3BC200087A4B /* FormInfoToPass.swift in Sources */,
 				A27D3E47245222D70035EF01 /* QuestionCell.swift in Sources */,

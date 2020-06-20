@@ -75,11 +75,11 @@ class ViewController: UIViewController {
         self.questionTV.scrollToRow(at: IndexPath(row: self.questions!.count - 1, section: 0), at: .bottom, animated: true)
     }
     
-    @objc private func deleteQuestion(_ sender: DeleteOptionButton) {
-        if self.questions!.count > 1 {
-            self.questions?.remove(at: sender.rowNumber! - 1)
-            self.questionTV.reloadData()
-        }
+    @objc private func deleteQuestion(_ sender: UIButton) {
+        guard self.questions!.count > 1 else { return }
+        self.questions?.remove(at: sender.tag - 1)
+        self.questionTV.reloadData()
+        
     }
     
     @objc private func cancel() {
@@ -131,6 +131,11 @@ class ViewController: UIViewController {
                     self.present(alert, animated: true)
                     
                     return
+                } else if choice.count > 50 {
+                    let alert = UIAlertController.init(title: "Alert", message: "Answer cannot be longer than 50 characters", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+                    self.present(alert, animated: true)
+                    return
                 }
             }
             let temp = question.choices?.removeDuplicates()
@@ -179,7 +184,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.QUESTION_CELL, for: indexPath) as! QuestionCell
-        cell.deleteButton.setRowNumber(number: indexPath.row)
+        cell.deleteButton.tag = indexPath.row
         cell.deleteButton.addTarget(self, action: #selector(self.deleteQuestion(_:)), for: .touchUpInside)
         return cell
     }

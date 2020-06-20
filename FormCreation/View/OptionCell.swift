@@ -35,8 +35,8 @@ class OptionCell : UITableViewCell, UITextFieldDelegate {
         return tv
     }()
     
-    var deleteButton : DeleteOptionButton = {
-        let btn = DeleteOptionButton()
+    var deleteButton : UIButton = {
+        let btn = UIButton()
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.setImage(UIImage(imageLiteralResourceName: "DeleteOption"), for: .normal)
         btn.widthAnchor.constraint(equalToConstant: 30).isActive = true
@@ -95,5 +95,7 @@ class OptionCell : UITableViewCell, UITextFieldDelegate {
         }
         
     }
+    
+    
     
 }
