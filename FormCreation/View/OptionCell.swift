@@ -34,6 +34,11 @@ class OptionCell : UITableViewCell, UITextFieldDelegate {
         tv.curveView()
         return tv
     }()
+//    var optionEntry: EntryTextField! {
+//        didSet {
+//
+//        }
+//    }// = EntryTextField(frame: .zero)
     
     var deleteButton : UIButton = {
         let btn = UIButton()
@@ -75,7 +80,6 @@ class OptionCell : UITableViewCell, UITextFieldDelegate {
         self.cellStack.addArrangedSubview(self.optionImage)
         self.cellStack.addArrangedSubview(self.spacingView)
         self.cellStack.addArrangedSubview(self.optionEntry)
-        //self.optionEntry.delegate = self
         self.cellStack.addArrangedSubview(self.deleteButton)
         self.contentView.addSubview(self.cellStack)
         self.cellStack.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 5).isActive = true
@@ -98,4 +102,22 @@ class OptionCell : UITableViewCell, UITextFieldDelegate {
     
     
     
+}
+
+class EntryTextField : UITextField {
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.textColor = .black
+        self.placeholder = "Enter an option here"
+        self.font = UIFont.systemFont(ofSize: 16)
+        self.giveBorder(color: .lightGray)
+        self.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        self.curveView()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }

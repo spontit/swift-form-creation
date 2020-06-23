@@ -30,6 +30,7 @@ class OptionTableView: UITableView {
     private func setUp() {
         self.register(OptionCell.self, forCellReuseIdentifier: Constants.OPTION_CELL)
         self.insetsContentViewsToSafeArea = true
+        self.isScrollEnabled = true
         self.contentInsetAdjustmentBehavior = .scrollableAxes
         
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -41,8 +42,5 @@ class OptionTableView: UITableView {
         self.allowsSelection = false
         self.allowsMultipleSelection = false
     }
-    
-//    func setRowNumber(row: Int) {
-//        self.rowNumer = row
-//    }
+
 }

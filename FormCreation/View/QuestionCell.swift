@@ -17,6 +17,7 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
     var optionTV: OptionTableView = OptionTableView(frame: .zero)
     var question: String?
     var options: [String]? = [""]
+    var optionEntries: [UITextField] = [UITextField()]
     
     var questionEntry : UITextField = {
         let tv = UITextField()
@@ -173,8 +174,6 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
         
         self.optionTVConstraint1 = self.optionTV.heightAnchor.constraint(equalToConstant: 160)
         self.optionTVConstraint1.isActive = true
-        self.optionTVConstraint2 = self.optionTV.heightAnchor.constraint(equalToConstant: 40 * CGFloat(self.options!.count + 1))
-        self.optionTVConstraint2.isActive = false
         
         self.overallStack.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 5).isActive = true
         self.overallStack.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -5).isActive = true
@@ -185,9 +184,14 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         if textField != self.questionEntry {
+            print("tag", textField.tag, self.options!.count - 1)
             if textField.tag < self.options!.count - 1 {
+                
                 let cell = self.optionTV.cellForRow(at: IndexPath(row: textField.tag + 1, section: 0)) as! OptionCell
-                cell.optionEntry.becomeFirstResponder()
+                if cell != nil {
+                    cell.optionEntry.becomeFirstResponder()
+                }
+                
             } else {
                 self.addOptionButton.sendActions(for: .touchUpInside)
             }
@@ -216,17 +220,20 @@ class QuestionCell : UITableViewCell, UITextFieldDelegate {
     //MARK:- @objc exposed functions
     @objc private func addOption(_ sender: UIButton) {
         self.options?.append("")
+        self.optionEntries = [UITextField()]
+        
         self.optionTV.reloadData()
+        print("self.options.count", self.optionEntries.count)
         if self.options!.count > 4 {
             self.optionTV.scrollToRow(at: IndexPath(row: self.options!.count - 1, section: 0), at: .bottom, animated: true)
             self.optionTV.flashScrollIndicators()
         }
-        self.optionTV.reloadData()
         let cell = self.optionTV.cellForRow(at: IndexPath(row: self.options!.count - 1, section: 0)) as? OptionCell
-        print("self.options.count", self.options!.count - 1)
-        if cell != nil {
-            cell!.optionEntry.becomeFirstResponder()
-        }
+        self.optionEntries.last?.becomeFirstResponder()
+//        print("cell", cell?.option)
+//        if cell != nil {
+//            cell!.optionEntry.becomeFirstResponder()
+//        }
         
     }
     
@@ -254,6 +261,8 @@ extension QuestionCell : UITableViewDelegate, UITableViewDataSource {
         cell.optionEntry.delegate = self
         cell.optionEntry.addTarget(self, action: #selector(self.textFieldDidBeginEditing(_:)), for: .editingChanged)
         cell.optionEntry.tag = indexPath.row
+        self.optionEntries.append(cell.optionEntry)
+        cell.option = self.options![indexPath.row]
         return cell
     }
     

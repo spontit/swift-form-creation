@@ -22,8 +22,8 @@ class FormOptionCell : UITableViewCell {
         return tv
     }()
     
-    var optionButton : DeleteOptionButton = {
-        let btn = DeleteOptionButton()
+    var optionButton : UIButton = {
+        let btn = UIButton()
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.setImage(UIImage(imageLiteralResourceName: "Unselected"), for: .normal)
         btn.setImage(UIImage(imageLiteralResourceName: "Selected"), for: .selected)

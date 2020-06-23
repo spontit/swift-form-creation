@@ -103,27 +103,27 @@ class FormQuestionCell : UITableViewCell {
     
     //MARK:- @objc exposed functions
     
-    @objc private func selectOption(_ sender: DeleteOptionButton) {
+    @objc private func selectOption(_ sender: UIButton) {
         sender.isSelected.toggle()
         if sender.isSelected == true {
             if self.question.allowMultipleSelection == false {
                 for i in 0 ..< self.question.choices!.count {
                     let cell = self.optionTV.cellForRow(at: IndexPath(row: i, section: 0)) as! FormOptionCell
-                    if i != sender.rowNumber {
+                    if i != sender.tag {
                         cell.optionButton.isSelected = false
                     } else {
                         cell.optionButton.isSelected = true
                     }
-                    self.question.selectedChoices = [sender.rowNumber!]
+                    self.question.selectedChoices = [sender.tag]
                 }
             } else {
-                self.question.didSelectChoice(choice: sender.rowNumber!)
+                self.question.didSelectChoice(choice: sender.tag)
                 
             }
             print("selected", self.question.selectedChoices)
         } else {
-            if sender.rowNumber != nil && self.question.selectedChoices != nil {
-                let index = self.question.selectedChoices?.firstIndex(of: sender.rowNumber!)
+            if self.question.selectedChoices != nil {
+                let index = self.question.selectedChoices?.firstIndex(of: sender.tag)
                 if index != nil {
                     self.question.selectedChoices?.remove(at: index!)
                 }
@@ -152,7 +152,7 @@ extension FormQuestionCell : UITableViewDelegate, UITableViewDataSource {
             cell.optionButton.setImage(UIImage(imageLiteralResourceName: "CheckBoxUnselected"), for: .normal)
             cell.optionButton.setImage(UIImage(imageLiteralResourceName: "CheckBoxSelected"), for: .selected)
         }
-        cell.optionButton.setRowNumber(number: indexPath.row)
+        cell.optionButton.tag = indexPath.row
         cell.optionButton.addTarget(self, action: #selector(self.selectOption(_:)), for: .touchUpInside)
         for option in self.question.selectedChoices! {
             print ("option", option)
